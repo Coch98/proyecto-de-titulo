@@ -1,0 +1,7 @@
+{
+  "name": "medmemory",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
