@@ -1,0 +1,68 @@
+ion-content {
+    display: flex;
+    justify-content: center;      /* Centra el contenido horizontalmente */
+    align-items: center;          /* Centra el contenido verticalmente */
+    height: 100%;                 /* Asegura que el contenido ocupe toda la altura de la página */
+    padding: 20px;
+    background: #f8f8f8;          /* Color de fondo de la página */
+  }
+  
+  form {
+    width: 100%;
+    max-width: 400px;             /* Limita el ancho máximo del formulario */
+    background-color: #ffffff;    /* Fondo blanco para el formulario */
+    padding: 20px;
+    border-radius: 10px;          /* Bordes redondeados para darle un aspecto suave */
+  
+    ion-title {
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+      font-size: 24px;
+      margin-bottom: 20px;        /* Espacio debajo del título */
+      padding: 10px 70px;       /* Espaciado interno del título */
+      background-color: #26b609;/* Color de fondo verde */
+      border-radius: 50px;      /* Bordes redondeados para crear el efecto ovalado */
+      color: #fff;              /* Color del texto */
+      text-align: center;       /* Centra el texto */  
+    }
+  
+    ion-item {
+      --background: transparent;  /* Fondo transparente para los ítems */
+      margin-bottom: 15px;        /* Espacio entre cada ítem */
+  
+      ion-label {
+        color: #555;              /* Color gris para las etiquetas */
+        font-size: 22px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+  
+      ion-input {
+        --padding-start: 0;       /* Remueve el padding inicial */
+        font-size: 16px;          /* Tamaño del texto de entrada */
+        color: #333;              /* Color del texto */
+      }
+    }
+  
+    ion-button {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;           /* Espacio encima de los botones */
+    }
+  
+    .oval-button1 {
+      padding: 6px 20px;          /* Espaciado interno del botón */
+      color: white;               /* Color del texto */
+      background-color: #26b609;  /* Fondo verde */
+      border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
+      font-size: 16px;
+    }
+  
+    .oval-button2 {
+      padding: 6px 20px;          /* Espaciado interno del botón */
+      color: white;               /* Color del texto */
+      background-color: #df1b1b;  /* Fondo rojo */
+      border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
+      font-size: 16px;
+    }
+  }
+  
