@@ -15,6 +15,8 @@ export class RegisterPage {
     password: ''
   };
 
+  passwordVisible = false;
+
   constructor(private alertCtrl: AlertController, private navCtrl: NavController) {}
   
   cancelRegistration() {
@@ -36,5 +38,9 @@ export class RegisterPage {
       email: '',
       password: ''
     };
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible; // Cambia el estado de visibilidad
   }
 }

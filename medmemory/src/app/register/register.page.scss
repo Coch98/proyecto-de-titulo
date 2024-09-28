@@ -33,13 +33,14 @@ ion-content {
       ion-label {
         color: #555;              /* Color gris para las etiquetas */
         font-size: 22px;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Roboto', sans-serif;
       }
   
       ion-input {
         --padding-start: 0;       /* Remueve el padding inicial */
         font-size: 16px;          /* Tamaño del texto de entrada */
         color: #333;              /* Color del texto */
+        font-family: 'Roboto', sans-serif;
       }
     }
   
@@ -63,6 +64,37 @@ ion-content {
       background-color: #df1b1b;  /* Fondo rojo */
       border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
       font-size: 16px;
+    }
+
+    ion-icon {
+      cursor: pointer; /* Cambia el cursor a mano al pasar sobre el ícono */
+      margin-left: 25px; /* Espacio entre el input y el ícono */
+      transform: translateY(29px);
+    }
+
+    .error-message {
+      display: flex;
+      align-items: center;
+      color: #ff4d4d;
+      font-size: 14px;
+      margin-left: -10px;
+    }
+
+    .alert-icon {
+      margin-right: 5px; /* Espacio entre el ícono y el texto */
+      font-size: 16px; /* Tamaño del ícono */
+      color: #ff4d4d;  /* Color del ícono de alerta */
+      transform: translateY(-1px);
+    }
+
+    .oval-button1:active{
+      background-color: #218e08; /* Cambio en hover */
+      transform: scale(0.95); /* Efecto de presionado */
+    }
+    
+    .oval-button2:active{
+      background-color: #ff4d4d; /* Cambio en hover */
+      transform: scale(0.95); /* Efecto de presionado */
     }
   }
   
