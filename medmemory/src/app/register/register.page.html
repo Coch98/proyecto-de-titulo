@@ -19,12 +19,20 @@
     <!-- Campo Correo Electrónico -->
     <ion-item>
       <ion-label position="stacked">Correo Electrónico</ion-label>
-      <ion-input type="email" [(ngModel)]="user.email" name="email" required #email="ngModel"></ion-input>
+      <ion-input 
+        type="email" 
+        [(ngModel)]="user.email" 
+        name="email" 
+        required
+        email
+        #email="ngModel">
+      </ion-input>
     </ion-item>
     <!-- Mensaje de error para el correo -->
     <div *ngIf="email.invalid && email.touched" class="error-message">
       <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
-      Campo obligatorio
+      <div *ngIf="email.errors?.['required']">Campo obligatorio</div>
+      <div *ngIf="email.errors?.['email']">La direccion de correo no es válida</div>
     </div>
 
     <!-- Campo Contraseña -->
@@ -35,6 +43,7 @@
         [(ngModel)]="user.password" 
         name="password" 
         required
+        minlength="8"
         #password="ngModel">
       </ion-input>
       <ion-icon 
@@ -45,7 +54,8 @@
     <!-- Mensaje de error para la contraseña -->
     <div *ngIf="password.invalid && password.touched" class="error-message">
       <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
-      Campo obligatorio
+      <div *ngIf="password.errors?.['required']">Campo obligatorio</div>
+      <div *ngIf="password.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</div>
     </div>
 
     <!-- Botón Crear Cuenta -->

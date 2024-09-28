@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { NavController } from '@ionic/angular';
-
+import { NavController, AlertController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -17,27 +16,45 @@ export class RegisterPage {
 
   passwordVisible = false;
 
-  constructor(private alertCtrl: AlertController, private navCtrl: NavController) {}
+  constructor(
+    private authService: AuthService,
+    private navCtrl: NavController,
+    private alertCtrl: AlertController
+  ) {}
   
   cancelRegistration() {
     this.navCtrl.navigateBack('/home');
   }
 
   async onRegister() {
-    // Simulación de registro exitoso
-    const alert = await this.alertCtrl.create({
-      header: 'Registro Exitoso',
-      message: `Usuario ${this.user.name} registrado.`,
-      buttons: ['OK']
-    });
-    await alert.present();
+    try {
+      await this.authService.registerUser(this.user);
+      console.log('User registered successfully');
 
-    // Limpiar los campos del formulario
-    this.user = {
-      name: '',
-      email: '',
-      password: ''
-    };
+      // Mostrar un mensaje de éxito
+      const alert = await this.alertCtrl.create({
+        header: 'Registro Exitoso',
+        message: `Usuario ${this.user.name} registrado.`,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.navCtrl.navigateBack('/home'); // Redirigir a /home
+          }
+        }]
+      });
+      await alert.present();
+
+      // Limpiar los campos del formulario
+      this.user = {
+        name: '',
+        email: '',
+        password: ''
+      };
+
+    } catch (error) {
+      console.error('Error registering user:', error);
+      // Opcional: Manejar el error y mostrar un mensaje al usuario
+    }
   }
 
   togglePasswordVisibility() {
