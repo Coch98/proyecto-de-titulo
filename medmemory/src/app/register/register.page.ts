@@ -15,6 +15,7 @@ export class RegisterPage {
   };
 
   passwordVisible = false;
+  errorMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -26,34 +27,46 @@ export class RegisterPage {
     this.navCtrl.navigateBack('/home');
   }
 
+  onEmailChange() {
+    this.errorMessage = '';
+  }
+
   async onRegister() {
+    this.errorMessage = '';
     try {
       await this.authService.registerUser(this.user);
       console.log('User registered successfully');
 
       // Mostrar un mensaje de éxito
       const alert = await this.alertCtrl.create({
-        header: 'Registro Exitoso',
-        message: `Usuario ${this.user.name} registrado.`,
-        buttons: [{
-          text: 'OK',
-          handler: () => {
-            this.navCtrl.navigateBack('/home'); // Redirigir a /home
+        header: '¡Bienvenido a Medmory!',
+        message: `${this.user.name} has sido registrado exitosamente.
+                  Por favor, revisa tu correo para verificar tu cuenta.`,
+        buttons: [
+          {
+            text: 'Ir a Inicio',
+            handler: () => {
+              this.navCtrl.navigateBack('/home');
+            },
           }
-        }]
+        ]
       });
       await alert.present();
+      
 
       // Limpiar los campos del formulario
-      this.user = {
+      /*this.user = {
         name: '',
         email: '',
         password: ''
-      };
+      };*/
 
-    } catch (error) {
-      console.error('Error registering user:', error);
-      // Opcional: Manejar el error y mostrar un mensaje al usuario
+    } catch (error: any) {
+      if (error.message === 'Este correo ya está en uso') {
+        this.errorMessage = 'Este correo ya está en uso'; // Mostrar el mensaje de error en el HTML
+      } else {
+        this.errorMessage = 'Error al registrar el usuario'; // Mostrar un mensaje genérico de error
+      }
     }
   }
 

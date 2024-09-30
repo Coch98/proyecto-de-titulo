@@ -28,6 +28,13 @@ export class AuthService {
         
         // Enviar el correo de verificación
         this.sendEmailVerification();
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          throw new Error('Este correo ya está en uso');
+        } else {
+          throw new Error('Error al registrar el usuario');
+        }
       });
   }
   async sendEmailVerification() {

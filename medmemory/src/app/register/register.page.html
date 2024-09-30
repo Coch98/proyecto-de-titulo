@@ -25,7 +25,8 @@
         name="email" 
         required
         email
-        #email="ngModel">
+        #email="ngModel"
+        (ionInput)="onEmailChange()">
       </ion-input>
     </ion-item>
     <!-- Mensaje de error para el correo -->
@@ -33,6 +34,10 @@
       <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
       <div *ngIf="email.errors?.['required']">Campo obligatorio</div>
       <div *ngIf="email.errors?.['email']">La direccion de correo no es válida</div>
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
+      {{ errorMessage }}
     </div>
 
     <!-- Campo Contraseña -->
@@ -51,6 +56,7 @@
         slot="end" 
         (click)="togglePasswordVisibility()"></ion-icon>
     </ion-item>
+
     <!-- Mensaje de error para la contraseña -->
     <div *ngIf="password.invalid && password.touched" class="error-message">
       <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
