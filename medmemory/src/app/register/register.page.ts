@@ -24,7 +24,7 @@ export class RegisterPage {
   ) {}
   
   cancelRegistration() {
-    this.navCtrl.navigateBack('/home');
+    this.navCtrl.navigateBack('/login');
   }
 
   onEmailChange() {

@@ -41,4 +41,9 @@ export class AuthService {
     const user = await this.afAuth.currentUser;
     return user?.sendEmailVerification();
   }
+
+  loginUser(user: any) {
+    return this.afAuth.signInWithEmailAndPassword(user.email, user.password);
+  }
+  
 }
