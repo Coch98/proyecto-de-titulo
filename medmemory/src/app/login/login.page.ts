@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service'; // Asegúrate de importar tu servicio de autenticación
 
 @Component({
@@ -12,16 +12,39 @@ export class LoginPage {
     email: '',
     password: ''
   };
+
+  passwordVisible = false;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private navCtrl: NavController) {}
+  constructor(
+    private authService: AuthService, 
+    private navCtrl: NavController,
+    private alertCtrl: AlertController
+  ) {}
+
+  
 
   async onLogin() {
-    try {
-      await this.authService.loginUser(this.user);
-      this.navCtrl.navigateBack('/home'); // Redirigir a la página principal
-    } catch (error: any) {
-      this.errorMessage = error.message; // Mostrar el mensaje de error
-    }
+    this.authService.loginUser(this.user)
+      .then(() => {
+        console.log('Login exitoso');
+        this.navCtrl.navigateBack('/home');
+      })
+      .catch(async (error) => {
+        const alert = await this.alertCtrl.create({
+          message: 'La combinación de correo y contraseña no corresponde. Vuelve a intentarlo.',
+          buttons: [{
+            text: 'OK',
+            cssClass: 'custom-alert-button', // Clase CSS personalizada
+          }],
+          backdropDismiss: false,
+          cssClass: 'custom-alert' // Clase CSS personalizada para el alert
+        });
+        await alert.present();
+      });
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible; // Cambia el estado de visibilidad
   }
 }

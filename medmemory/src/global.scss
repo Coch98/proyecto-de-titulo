@@ -35,3 +35,29 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+.custom-alert {
+    // Cambia el fondo del alert
+    .alert-wrapper {
+      background-color: #ece6d1; // Cambia esto al color que desees
+      border-radius: 15px; // Bordes redondeados
+    }
+    
+    .alert-message {
+      color: #383838; // Color más oscuro para el mensaje
+      font-size: 16px; // Tamaño de la fuente del mensaje
+      margin-bottom: -15px; // Reduce el margen debajo del mensaje
+      margin-top: -10px; // Reduce el margen sobre del mensaje
+      position: relative; // Para que el pseudo-elemento se posicione relativo a este elemento
+    }
+  
+    .custom-alert-button {
+      color: #26b609; // Color del texto del botón
+      font-weight: bold; // Negrita
+      text-align: center; // Centra el texto en el botón
+      padding: 10px 20px; // Espaciado alrededor del texto
+      font-size: 17px;
+      margin: 0 auto; // Centra el botón
+    }
+  }
+  

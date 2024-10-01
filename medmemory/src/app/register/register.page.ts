@@ -44,12 +44,14 @@ export class RegisterPage {
                   Por favor, revisa tu correo para verificar tu cuenta.`,
         buttons: [
           {
-            text: 'Ir a Inicio',
+            text: 'OK',
+            cssClass: 'custom-alert-button',
             handler: () => {
-              this.navCtrl.navigateBack('/home');
+              this.navCtrl.navigateBack('/login');
             },
-          }
-        ]
+        }],
+        backdropDismiss: false,
+        cssClass: 'custom-alert' 
       });
       await alert.present();
       

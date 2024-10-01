@@ -4,13 +4,13 @@ ion-content {
     align-items: center;          /* Centra el contenido verticalmente */
     height: 100%;                 /* Asegura que el contenido ocupe toda la altura de la página */
     padding: 20px;
-    background: #f8f8f8;          /* Color de fondo de la página */
+    --background: #ece6d1;          /* Color de fondo de la página */
   }
   
   form {
     width: 100%;
     max-width: 400px;             /* Limita el ancho máximo del formulario */
-    background-color: #ffffff;    /* Fondo blanco para el formulario */
+    background-color:#ece6d1;    /* Fondo blanco para el formulario */
     padding: 20px;
     border-radius: 10px;          /* Bordes redondeados para darle un aspecto suave */
   
