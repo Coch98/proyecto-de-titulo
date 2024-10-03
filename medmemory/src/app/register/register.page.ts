@@ -24,7 +24,7 @@ export class RegisterPage {
   ) {}
   
   cancelRegistration() {
-    this.navCtrl.navigateBack('/home');
+    this.navCtrl.navigateBack('/login');
   }
 
   onEmailChange() {
@@ -44,12 +44,14 @@ export class RegisterPage {
                   Por favor, revisa tu correo para verificar tu cuenta.`,
         buttons: [
           {
-            text: 'Ir a Inicio',
+            text: 'OK',
+            cssClass: 'custom-alert-button',
             handler: () => {
-              this.navCtrl.navigateBack('/home');
+              this.navCtrl.navigateBack('/login');
             },
-          }
-        ]
+        }],
+        backdropDismiss: false,
+        cssClass: 'custom-alert' 
       });
       await alert.present();
       
@@ -65,7 +67,7 @@ export class RegisterPage {
       if (error.message === 'Este correo ya está en uso') {
         this.errorMessage = 'Este correo ya está en uso'; // Mostrar el mensaje de error en el HTML
       } else {
-        this.errorMessage = 'Error al registrar el usuario'; // Mostrar un mensaje genérico de error
+        this.errorMessage = 'Formato de correo invalido'; // Mostrar un mensaje genérico de error
       }
     }
   }

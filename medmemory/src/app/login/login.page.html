@@ -1,0 +1,57 @@
+<ion-content>
+  <form (ngSubmit)="onLogin()">
+    <!-- Título con estilo ovalado -->
+    <ion-title>
+      Medmory
+    </ion-title>
+
+    <ion-item>
+      <ion-label position="stacked">Correo Electrónico</ion-label>
+      <ion-input 
+        type="email" 
+        [(ngModel)]="user.email" 
+        name="email" 
+        required
+        email
+        #email="ngModel">
+      </ion-input>
+    </ion-item>
+    <!-- Mensaje de error para el correo -->
+    <div *ngIf="email.invalid && email.touched" class="error-message">
+      <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
+      <div *ngIf="email.errors?.['required']">Campo obligatorio</div>
+      <div *ngIf="email.errors?.['email']">La direccion de correo no es válida</div>
+    </div>
+
+    <ion-item>
+      <ion-label position="stacked">Contraseña</ion-label>
+      <ion-input 
+        [type]="passwordVisible ? 'text' : 'password'" 
+        [(ngModel)]="user.password" 
+        name="password" 
+        required
+        #password="ngModel">
+      </ion-input>
+      <ion-icon 
+      [name]="passwordVisible ? 'eye-off' : 'eye'" 
+      slot="end" 
+      (click)="togglePasswordVisibility()"></ion-icon>
+    </ion-item>
+
+    <!-- Mensaje de error para la contraseña -->
+    <div *ngIf="password.invalid && password.touched" class="error-message">
+      <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
+      <div *ngIf="password.errors?.['required']">Campo obligatorio</div>
+    </div>
+
+    <ion-button class="oval-button1" expand="full" fill="clear" type="submit">Iniciar Sesión</ion-button>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <ion-button class="oval-button1" routerLink="/register" expand="full" fill="clear" >Registrate</ion-button>
+
+    <ion-item lines="none">
+      <ion-label class="forgot-password-label">¿Has olvidado tu contraseña?</ion-label>
+    </ion-item>
+
+  </form>
+</ion-content>
+

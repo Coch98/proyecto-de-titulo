@@ -41,4 +41,18 @@ export class AuthService {
     const user = await this.afAuth.currentUser;
     return user?.sendEmailVerification();
   }
+
+  loginUser(user: any) {
+    return this.afAuth.signInWithEmailAndPassword(user.email, user.password)
+    .then((userCredential) => {
+      // Inicio de sesión exitoso
+      const loggedInUser = userCredential.user;
+      console.log('Inicio de sesión exitoso', loggedInUser);
+      // Redirigir o realizar otras acciones necesarias
+    })
+    .catch((error) => {
+      // Manejo de errores
+      throw new Error("La combinación de correo y contraseña no corresponde. Vuelve a intentarlo.");
+    });
+  }
 }

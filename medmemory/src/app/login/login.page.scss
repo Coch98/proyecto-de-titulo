@@ -5,7 +5,7 @@ ion-content {
     height: 100%;                 /* Asegura que el contenido ocupe toda la altura de la página */
     padding: 20px;
     --background: #ece6d1;          /* Color de fondo de la página */
-  }
+}
   
   form {
     width: 100%;
@@ -57,14 +57,6 @@ ion-content {
       border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
       font-size: 16px;
     }
-  
-    .oval-button2 {
-      padding: 6px 20px;          /* Espaciado interno del botón */
-      color: white;               /* Color del texto */
-      background-color: #df1b1b;  /* Fondo rojo */
-      border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
-      font-size: 16px;
-    }
 
     ion-icon {
       cursor: pointer; /* Cambia el cursor a mano al pasar sobre el ícono */
@@ -91,10 +83,20 @@ ion-content {
       background-color: #218e08; /* Cambio en hover */
       transform: scale(0.95); /* Efecto de presionado */
     }
-    
-    .oval-button2:active{
-      background-color: #ff4d4d; /* Cambio en hover */
-      transform: scale(0.95); /* Efecto de presionado */
-    } 
-  }
+
+    .forgot-password-label {
+      font-size: 16px !important;  /* Cambia el tamaño a 16px y fuerza la aplicación */
+      text-align: center;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+      
+    .forgot-password-label:hover {
+      text-decoration: underline !important;  /* Efecto de subrayado al pasar el cursor */
+    }
+ 
+}
+
+
   
