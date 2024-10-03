@@ -67,7 +67,7 @@ export class RegisterPage {
       if (error.message === 'Este correo ya está en uso') {
         this.errorMessage = 'Este correo ya está en uso'; // Mostrar el mensaje de error en el HTML
       } else {
-        this.errorMessage = 'Error al registrar el usuario'; // Mostrar un mensaje genérico de error
+        this.errorMessage = 'Formato de correo invalido'; // Mostrar un mensaje genérico de error
       }
     }
   }
