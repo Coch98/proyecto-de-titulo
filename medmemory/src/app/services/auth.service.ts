@@ -55,4 +55,9 @@ export class AuthService {
       throw new Error("La combinación de correo y contraseña no corresponde. Vuelve a intentarlo.");
     });
   }
+
+  logoutUser() {
+    return this.afAuth.signOut();
+  }
+  
 }

@@ -1,27 +1,22 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+// Personalización del botón de cerrar sesión
+.logout-button {
+  --background: #df1b1b; /* Color de fondo del botón de cerrar sesión */
+  color: white; /* Color del texto del botón */
+  font-weight: bold; /* Negrita */
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.dropdown-menu{
+  --background:#26b609;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+ion-toolbar{
+  --background: #ece6d1;
 }
 
-#container a {
-  text-decoration: none;
+ion-content{
+  --background: #ece6d1;
+}
+
+ion-menu{
+ --background: #ece6d1; 
 }

@@ -1,23 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service'; // Asegúrate de tener este servicio creado
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
+  userName: string = '';
 
-  data: any;
-
-  constructor(private apiService: ApiService) {}
-
-  ngOnInit() {
-    this.apiService.getData().subscribe(response => {
-      this.data = response;
-      console.log(this.data); // Verifica la respuesta en la consola
-    }, error => {
-      console.error('Error al obtener los datos:', error);
+  constructor(
+    private authService: AuthService, 
+    private navCtrl: NavController, 
+    private alertCtrl: AlertController
+  ) {}
+  
+  async onLogout() {
+    const alert = await this.alertCtrl.create({
+      message: '¿Estás seguro que quieres cerrar tu sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'custom-cancel-button',  // Clase CSS para personalizar el botón
+        },
+        {
+          text: 'Cerrar Sesión',
+          handler: () => {
+            this.authService.logoutUser().then(() => {
+              console.log('Sesión cerrada');
+              this.navCtrl.navigateBack('/login'); // Redirigir a la página de inicio de sesión
+            }).catch(error => {
+              console.error('Error al cerrar sesión', error);
+            });
+          },
+          cssClass: 'custom-logout-button'  // Clase CSS para personalizar el botón
+        }
+      ],
+      cssClass: 'custom-alert',  // Clase CSS para el alert en general
     });
+
+    await alert.present();
   }
 }
