@@ -1,15 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-app>
+  <!-- Menú lateral -->
+  <ion-menu side="end" content-id="main-content">
+    <ion-toolbar class="dropdown-menu">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+    <ion-content class="ion-padding">
+      <!-- Contenido del menú -->
+      <ion-item>Opción 1</ion-item>
+      <ion-item>Opción 2</ion-item>
+      <ion-item>Opción 3</ion-item>
+      <!-- Botón de Cerrar Sesión en el menú -->
+    </ion-content>
+        <ion-button class="logout-button" expand="block" fill="clear" (click)="onLogout()">Cerrar Sesión</ion-button>
+  </ion-menu>
 
-<ion-content>
-  <h2>Datos del Backend:</h2>
-  <pre>{{ data | json }}</pre> <!-- Muestra la respuesta del backend -->
-</ion-content>
+  <!-- Contenido principal -->
+  <div class="ion-page" id="main-content">
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Página Principal</ion-title>
+    </ion-toolbar>
 
-
-
+    <ion-content class="ion-padding">
+      <p>Haz clic en el botón en la barra de herramientas para abrir el menú.</p>
+    </ion-content>
+  </div>
+</ion-app>
