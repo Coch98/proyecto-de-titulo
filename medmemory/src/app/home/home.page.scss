@@ -1,16 +1,35 @@
-// Personalización del botón de cerrar sesión
 .logout-button {
   --background: #df1b1b; /* Color de fondo del botón de cerrar sesión */
   color: white; /* Color del texto del botón */
   font-weight: bold; /* Negrita */
 }
 
-.dropdown-menu{
-  --background:#26b609;
-}
+ion-toolbar {
+  --background: #26b609; /* Color de fondo verde para la barra superior */
 
-ion-toolbar{
-  --background: #ece6d1;
+  .title-container {
+    display: flex;
+    justify-content: center; /* Centra el título horizontalmente */
+    text-align: center;
+    transform: translateX(46px);
+  }
+  
+  ion-title {
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+  }
+
+  ion-buttons {
+    ion-icon {
+      font-size: 24px;
+      color: white;
+    }
+  
+    ion-menu-button {
+      color: white; /* Cambia el color del botón de menú a blanco */
+    }
+  }
 }
 
 ion-content{
@@ -19,4 +38,56 @@ ion-content{
 
 ion-menu{
  --background: #ece6d1; 
+}
+
+.example-content {
+  display: flex;
+  flex-direction: column; /* Apilar los elementos verticalmente */
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Asegura que el contenedor ocupe toda la altura */
+  text-align: center; /* Para centrar el texto de los elementos */
+}
+
+h2 {
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+  color: #333; /* Color del texto del subtítulo */
+  margin-bottom: 20px; /* Espacio debajo del subtítulo */
+  text-align: center;
+}
+
+.oval-button {
+  padding: 6px 18px;          /* Espaciado interno del botón */
+  color: white;               /* Color del texto */
+  background-color: #26b609;  /* Fondo verde */
+  border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
+  font-size: 16px;
+}
+
+ion-tab-bar {
+  --ion-color-primary: #26b609; /* Cambia el color activo a verde */
+  
+  ion-tab-button {
+    --color: #646363; /* Color de los iconos y texto inactivos */
+  
+  &.tab-selected {
+      /* Estilos para el botón cuando está seleccionado */
+      color: #26b609; /* Cambia a verde cuando está activo */
+    }
+  }
+  
+  ion-icon {
+    font-size: 22px;
+  }
+  
+  ion-label {
+    font-size: 14px;
+  }
 }
