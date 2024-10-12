@@ -37,6 +37,13 @@ export class RegisterPage {
       await this.authService.registerUser(this.user);
       console.log('User registered successfully');
 
+      // Limpiar los campos del formulario
+      this.user = {
+        name: '',
+        email: '',
+        password: ''
+    };
+
       // Mostrar un mensaje de éxito
       const alert = await this.alertCtrl.create({
         header: '¡Bienvenido a Medmory!',
@@ -54,14 +61,6 @@ export class RegisterPage {
         cssClass: 'custom-alert' 
       });
       await alert.present();
-      
-
-      // Limpiar los campos del formulario
-      /*this.user = {
-        name: '',
-        email: '',
-        password: ''
-      };*/
 
     } catch (error: any) {
       if (error.message === 'Este correo ya está en uso') {

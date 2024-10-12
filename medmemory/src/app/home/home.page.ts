@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service'; // Asegúrate de tener este servicio creado
 import { NavController, AlertController } from '@ionic/angular';
+import { IonTabs } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,9 @@ import { NavController, AlertController } from '@ionic/angular';
 })
 export class HomePage {
   userName: string = '';
+
+  // Obtén una referencia a IonTabs
+  @ViewChild('tabs', { static: false }) tabs!: IonTabs;
 
   constructor(
     private authService: AuthService, 
@@ -42,5 +46,9 @@ export class HomePage {
     });
 
     await alert.present();
+  }
+  
+  goToReminders() {
+    this.tabs.select('reminders');  // Cambia a la pestaña de recordatorios
   }
 }

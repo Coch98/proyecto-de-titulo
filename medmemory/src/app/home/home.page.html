@@ -1,30 +1,117 @@
-<ion-app>
-  <!-- Menú lateral -->
-  <ion-menu side="end" content-id="main-content">
-    <ion-toolbar class="dropdown-menu">
-      <ion-title>Menú</ion-title>
-    </ion-toolbar>
-    <ion-content class="ion-padding">
-      <!-- Contenido del menú -->
-      <ion-item>Opción 1</ion-item>
-      <ion-item>Opción 2</ion-item>
-      <ion-item>Opción 3</ion-item>
-      <!-- Botón de Cerrar Sesión en el menú -->
-    </ion-content>
-        <ion-button class="logout-button" expand="block" fill="clear" (click)="onLogout()">Cerrar Sesión</ion-button>
-  </ion-menu>
+<!-- Menú lateral -->
+<ion-menu side="end" content-id="main-content">
+  <ion-toolbar class="dropdown-menu">
+    <ion-title>Menú</ion-title>
+  </ion-toolbar>
+  <ion-content class="ion-padding">
+    <!-- Contenido del menú -->
+    <ion-item>Opción 1</ion-item>
+    <ion-item>Opción 2</ion-item>
+    <ion-item>Opción 3</ion-item>
+    <!-- Botón de Cerrar Sesión en el menú -->
+  </ion-content>
+      <ion-button class="logout-button" expand="block" fill="clear" (click)="onLogout()">Cerrar Sesión</ion-button>
+</ion-menu>
 
-  <!-- Contenido principal -->
-  <div class="ion-page" id="main-content">
-    <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Página Principal</ion-title>
-    </ion-toolbar>
+<ion-tabs #tabs>
+   <!-- Tab Home -->
+   <ion-tab tab="home">
+    <div class="ion-page" id="main-content">
+      <ion-toolbar>
+        <!-- Título centrado -->
+        <ion-title class="title-container">Medmory</ion-title>
+  
+        <!-- Botones de notificaciones y menú -->
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon name="notifications-outline"></ion-icon>
+          </ion-button>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+  
+      <ion-content class="ion-padding">
+        <div class="example-content">
+          <h2>¡Vea aquí sus recordatorios!</h2>
+          <p>Sus tareas apareceran cuando las programe en Recordatorios.</p>
+          <ion-button class="oval-button" expand="full" fill="clear" (click)="goToReminders()">Ir a Recordatorios</ion-button>
+        </div>
+      </ion-content>
+    </div>
+  </ion-tab>
 
-    <ion-content class="ion-padding">
-      <p>Haz clic en el botón en la barra de herramientas para abrir el menú.</p>
-    </ion-content>
-  </div>
-</ion-app>
+   <!-- Tab Recordatorios -->
+   <ion-tab tab="reminders">
+    <ion-nav id="reminders-nav"></ion-nav>
+    <div id="reminders-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Recordatorios</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="example-content">
+          Aquí puedes ver tus recordatorios.
+        </div>
+      </ion-content>
+    </div>
+  </ion-tab>
+
+  <!-- Tab Citas Médicas -->
+  <ion-tab tab="appointments">
+    <ion-nav id="appointments-nav"></ion-nav>
+    <div id="appointments-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Citas Médicas</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="example-content">
+          Aquí puedes gestionar tus citas médicas.
+        </div>
+      </ion-content>
+    </div>
+  </ion-tab>
+
+  <!-- Tab Buscar -->
+  <ion-tab tab="search">
+    <ion-nav id="search-nav"></ion-nav>
+    <div id="search-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Buscar</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="example-content">
+          Función de búsqueda.
+        </div>
+      </ion-content>
+    </div>
+  </ion-tab>
+
+  <!-- Barra de Tabs en la parte inferior -->
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="reminders">
+      <ion-icon name="alarm-outline"></ion-icon>
+      <ion-label>Recordatorios</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="appointments">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-label>Citas</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="search">
+      <ion-icon name="search-outline"></ion-icon>
+      <ion-label>Buscar</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
