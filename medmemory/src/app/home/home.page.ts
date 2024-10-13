@@ -47,8 +47,8 @@ export class HomePage {
 
     await alert.present();
   }
-  
-  goToReminders() {
-    this.tabs.select('reminders');  // Cambia a la pestaña de recordatorios
+
+  goToMedicineForm() {
+    this.navCtrl.navigateForward('/medicine-form');
   }
 }

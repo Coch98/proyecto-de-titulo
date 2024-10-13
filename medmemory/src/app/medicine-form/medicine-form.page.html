@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Medicamento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="medicamentoForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Nombre del Medicamento</ion-label>
+      <ion-input formControlName="nombre" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Frecuencia</ion-label>
+      <ion-select formControlName="frecuencia" (ionChange)="onFrecuenciaChange($event)">
+        <ion-select-option value="1">Una vez al día</ion-select-option>
+        <ion-select-option value="2">Dos veces al día</ion-select-option>
+        <ion-select-option value="3">Tres veces al día</ion-select-option>
+        <ion-select-option value="4">Cuatro veces al día</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Dosis</ion-label>
+      <ion-input formControlName="dosis" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Hora(s)</ion-label>
+      <div *ngFor="let hora of horas; let i = index">
+        <ion-input [formControlName]="'hora' + i" placeholder="Hora {{ i + 1 }}" required></ion-input>
+      </div>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Guardar Medicamento</ion-button>
+  </form>
+</ion-content>

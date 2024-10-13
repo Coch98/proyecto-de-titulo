@@ -15,7 +15,7 @@
 
 <ion-tabs #tabs>
    <!-- Tab Home -->
-   <ion-tab tab="home">
+   <ion-tab tab="reminders">
     <div class="ion-page" id="main-content">
       <ion-toolbar>
         <!-- Título centrado -->
@@ -33,29 +33,37 @@
       <ion-content class="ion-padding">
         <div class="example-content">
           <h2>¡Vea aquí sus recordatorios!</h2>
-          <p>Sus tareas apareceran cuando las programe en Recordatorios.</p>
-          <ion-button class="oval-button" expand="full" fill="clear" (click)="goToReminders()">Ir a Recordatorios</ion-button>
+          <p>Sus tareas apareceran cuando las programe en Medicamentos o Citas.</p>
         </div>
       </ion-content>
     </div>
   </ion-tab>
 
    <!-- Tab Recordatorios -->
-   <ion-tab tab="reminders">
-    <ion-nav id="reminders-nav"></ion-nav>
-    <div id="reminders-page">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Recordatorios</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <div class="example-content">
-          Aquí puedes ver tus recordatorios.
-        </div>
-      </ion-content>
-    </div>
-  </ion-tab>
+<ion-tab tab="medicine">
+  <div class="ion-page" id="main-content">
+    <ion-toolbar>
+      <!-- Título centrado -->
+      <ion-title class="title-container">Medicamentos</ion-title>
+
+      <!-- Botones de notificaciones y menú -->
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-button>
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-content class="ion-padding">
+      <div class="example-content">
+        <h2>¡Comenzemos!</h2>
+        <p>Programa y administra tus medicamentos desde esta sección.</p>
+        <ion-button class="oval-button" expand="full" fill="clear" (click)="goToMedicineForm()">Agregar Medicamento</ion-button>
+      </div>
+    </ion-content>
+  </div>
+</ion-tab>
 
   <!-- Tab Citas Médicas -->
   <ion-tab tab="appointments">
@@ -93,14 +101,14 @@
 
   <!-- Barra de Tabs en la parte inferior -->
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
-      <ion-icon name="home-outline"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-
     <ion-tab-button tab="reminders">
       <ion-icon name="alarm-outline"></ion-icon>
       <ion-label>Recordatorios</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="medicine">
+      <ion-icon name="medkit-outline"></ion-icon>
+      <ion-label>Medicamentos</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="appointments">
