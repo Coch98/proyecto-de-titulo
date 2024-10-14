@@ -6,33 +6,85 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="medicamentoForm" (ngSubmit)="onSubmit()">
+    <!-- Nombre del Medicamento -->
     <ion-item>
-      <ion-label position="floating">Nombre del Medicamento</ion-label>
+      <ion-label position="stacked">Nombre del Medicamento</ion-label>
       <ion-input formControlName="nombre" required></ion-input>
     </ion-item>
 
+    <!-- Frecuencia con Radio Buttons -->
     <ion-item>
-      <ion-label position="floating">Frecuencia</ion-label>
-      <ion-select formControlName="frecuencia" (ionChange)="onFrecuenciaChange($event)">
-        <ion-select-option value="1">Una vez al día</ion-select-option>
-        <ion-select-option value="2">Dos veces al día</ion-select-option>
-        <ion-select-option value="3">Tres veces al día</ion-select-option>
-        <ion-select-option value="4">Cuatro veces al día</ion-select-option>
+      <ion-label position="stacked">Frecuencia</ion-label>
+    </ion-item>
+
+    <ion-radio-group formControlName="frecuencia" (ionChange)="onFrecuenciaChange($event)">
+      <ion-item>
+        <ion-label>Una vez al día</ion-label>
+        <ion-radio slot="start" value="1"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Dos veces al día</ion-label>
+        <ion-radio slot="start" value="2"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Tres veces al día</ion-label>
+        <ion-radio slot="start" value="3"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Cuatro veces al día</ion-label>
+        <ion-radio slot="start" value="4"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+    <ion-item>
+      <ion-label position="stacked">Dosis</ion-label>
+    
+      <!-- Selección del tipo de dosis -->
+      <ion-select justify="space-between" label="Tipo" placeholder="Tipo de Dosis" formControlName="tipoDosis" required>
+        <ion-select-option value="tabletas">Tabletas</ion-select-option>
+        <ion-select-option value="capsulas">Cápsulas</ion-select-option>
+        <ion-select-option value="gotas">Gotas</ion-select-option>
+        <ion-select-option value="mililitros">Mililitros (mL)</ion-select-option>
+        <ion-select-option value="aplicaciones">Aplicaciones (cremas, ungüentos)</ion-select-option>
+        <ion-select-option value="supositorios">Supositorios</ion-select-option>
       </ion-select>
-    </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Dosis</ion-label>
-      <ion-input formControlName="dosis" required></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Hora(s)</ion-label>
-      <div *ngFor="let hora of horas; let i = index">
-        <ion-input [formControlName]="'hora' + i" placeholder="Hora {{ i + 1 }}" required></ion-input>
+      <div class="counter__section">
+        <ion-button id="decrement" (click)="decrement()">-</ion-button>
+        <p id="counter">{{ count }}</p>
+        <ion-button id="increment" (click)="increment()">+</ion-button>
       </div>
     </ion-item>
 
+    <ion-item>
+      <ion-label position="floating">Hora</ion-label>
+      <div *ngFor="let hora of horas; let i = index">
+        <ion-select formControlName="hora{{ i }}" required>
+          <ion-select-option *ngFor="let h of hours" [value]="h">{{ h }}</ion-select-option>
+        </ion-select>
+        <ion-select formControlName="minuto{{ i }}" required>
+          <ion-select-option *ngFor="let m of minutos" [value]="m">{{ m }}</ion-select-option>
+        </ion-select>
+      </div>
+    </ion-item>
+    
+
+    <!-- Botón de Guardar -->
     <ion-button expand="full" type="submit">Guardar Medicamento</ion-button>
   </form>
+
+  <div *ngIf="medicamentos.length > 0">
+    <ion-card *ngFor="let medicamento of medicamentos">
+      <ion-card-header>
+        <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Veces al dia: {{ medicamento.frecuencia }} - {{ medicamento.dosis }} {{medicamento.tipoDosis}} </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>
