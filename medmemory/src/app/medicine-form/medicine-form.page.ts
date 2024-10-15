@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MedicinesService } from '../services/medicines.service';  // Importa el servicio
+import firebase from 'firebase/compat/app'; // Importa firebase para usar Timestamp
 
 @Component({
   selector: 'app-medicine-form',
@@ -12,10 +13,8 @@ export class MedicineFormPage implements OnInit {
   medicamentos: any[] = []; // Array para almacenar los medicamentos guardados
   count: number = 1; // Inicializa el contador
   horas: string[] = [];
-  hours: string[] = []; // Arreglo para horas
-  minutos: string[] = []; // Arreglo para minutos
 
-  constructor(private fb: FormBuilder, private medicinesService: MedicinesService) { // Inyecta el servicio
+  constructor(private fb: FormBuilder, private medicinesService: MedicinesService) {
     this.medicamentoForm = this.fb.group({
       nombre: ['', Validators.required],
       frecuencia: ['', Validators.required],
@@ -25,20 +24,16 @@ export class MedicineFormPage implements OnInit {
   }
 
   ngOnInit() {
-    // Inicializar los arreglos de horas y minutos
     this.horas = [];
-    this.hours = Array.from({ length: 24 }, (_, i) => (i < 10 ? '0' : '') + i); // Horas de 00 a 23
-    this.minutos = Array.from({ length: 60 }, (_, i) => (i < 10 ? '0' : '') + i); // Minutos de 00 a 59
   }
 
   onFrecuenciaChange(event: any) {
     const frecuencia = event.detail.value;
     this.horas = Array.from({ length: frecuencia }, (_, index) => `hora${index}`);
-    
+
     // Reiniciar los controles de hora en el formulario
     this.horas.forEach((_, index) => {
       this.medicamentoForm.addControl(`hora${index}`, this.fb.control('', Validators.required));
-      this.medicamentoForm.addControl(`minuto${index}`, this.fb.control('', Validators.required));
     });
   }
 
@@ -46,9 +41,18 @@ export class MedicineFormPage implements OnInit {
     if (this.medicamentoForm.valid) {
       const medicamentoData = {
         ...this.medicamentoForm.value,
-        dosis: this.count // Incluye la cantidad en los datos a guardar
+        dosis: this.count,
       };
-      
+
+      // Convertir las horas a objetos timestamp
+      const hoursArray = this.horas.map((_, index) => {
+        const horaValue = this.medicamentoForm.get(`hora${index}`)?.value; // Obtiene el valor de la hora
+        return horaValue ? firebase.firestore.Timestamp.fromDate(new Date(horaValue)) : null; // Solo crea el Timestamp si hay un valor
+      });
+
+      // Agregar las horas al objeto de datos del medicamento
+      medicamentoData.horas = hoursArray.filter(hora => hora !== null); // Filtra las horas nulas
+
       // Guardar en Firestore usando el servicio
       this.medicinesService.addMedicine(medicamentoData).then(() => {
         console.log('Medicamento guardado exitosamente');
@@ -56,12 +60,11 @@ export class MedicineFormPage implements OnInit {
         console.error('Error al guardar el medicamento:', error);
       });
 
-      // Guardar el medicamento en el array medicamentos
       this.medicamentos.push(medicamentoData);
       console.log('Medicamento guardado:', medicamentoData);
 
       this.medicamentoForm.reset();
-      this.count = 0;
+      this.count = 1;
       this.horas = [];
     }
   }

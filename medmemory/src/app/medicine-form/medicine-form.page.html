@@ -19,25 +19,35 @@
 
     <ion-radio-group formControlName="frecuencia" (ionChange)="onFrecuenciaChange($event)">
       <ion-item>
-        <ion-label>Una vez al día</ion-label>
-        <ion-radio slot="start" value="1"></ion-radio>
+        <ion-radio justify="space-between" value="1">Una vez al día</ion-radio>
       </ion-item>
 
       <ion-item>
-        <ion-label>Dos veces al día</ion-label>
-        <ion-radio slot="start" value="2"></ion-radio>
+        <ion-radio justify="space-between" value="2">Dos veces al día</ion-radio>
       </ion-item>
 
       <ion-item>
-        <ion-label>Tres veces al día</ion-label>
-        <ion-radio slot="start" value="3"></ion-radio>
+        <ion-radio justify="space-between" value="3">Tres veces al día</ion-radio>
       </ion-item>
 
       <ion-item>
-        <ion-label>Cuatro veces al día</ion-label>
-        <ion-radio slot="start" value="4"></ion-radio>
+        <ion-radio justify="space-between" value="4">Cuatro veces al día</ion-radio>
       </ion-item>
     </ion-radio-group>
+
+     <!-- Seleccionar horas usando ion-datetime -->
+     <div *ngFor="let hora of horas; let i = index">
+      <ion-item>
+        <ion-label>Selecciona la hora {{ i + 1 }}</ion-label>
+        <ion-datetime 
+          formControlName="hora{{ i }}" 
+          presentation="time" 
+          display-format="HH:mm"
+          minute-values="0,5,10,15.20,25,30,35,40,45,50,55" 
+          hour-cycle="h23">
+        </ion-datetime>
+      </ion-item>
+    </div>
 
     <ion-item>
       <ion-label position="stacked">Dosis</ion-label>
@@ -59,18 +69,6 @@
       </div>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Hora</ion-label>
-      <div *ngFor="let hora of horas; let i = index">
-        <ion-select formControlName="hora{{ i }}" required>
-          <ion-select-option *ngFor="let h of hours" [value]="h">{{ h }}</ion-select-option>
-        </ion-select>
-        <ion-select formControlName="minuto{{ i }}" required>
-          <ion-select-option *ngFor="let m of minutos" [value]="m">{{ m }}</ion-select-option>
-        </ion-select>
-      </div>
-    </ion-item>
-    
 
     <!-- Botón de Guardar -->
     <ion-button expand="full" type="submit">Guardar Medicamento</ion-button>
@@ -82,9 +80,13 @@
         <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Veces al dia: {{ medicamento.frecuencia }} - {{ medicamento.dosis }} {{medicamento.tipoDosis}} </p>
+        <p>Veces al día: {{ medicamento.frecuencia }} - {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
+        <p *ngFor="let hora of medicamento.horas; let i = index">
+          Hora {{ i + 1 }}: {{ hora.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
+        </p>
       </ion-card-content>
     </ion-card>
   </div>
+  
 
 </ion-content>
