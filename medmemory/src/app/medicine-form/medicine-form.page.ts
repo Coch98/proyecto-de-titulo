@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController} from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';  // Importa el servicio
 import firebase from 'firebase/compat/app'; // Importa firebase para usar Timestamp
 
@@ -14,12 +15,12 @@ export class MedicineFormPage implements OnInit {
   count: number = 1; // Inicializa el contador
   horas: string[] = [];
 
-  constructor(private fb: FormBuilder, private medicinesService: MedicinesService) {
+  constructor(private fb: FormBuilder, private medicinesService: MedicinesService, private navCtrl: NavController,) {
     this.medicamentoForm = this.fb.group({
       nombre: ['', Validators.required],
       frecuencia: ['', Validators.required],
       tipoDosis: ['', Validators.required],
-      dosis: [''],
+      dosis: [this.count, Validators.required],
     });
   }
 
@@ -69,13 +70,27 @@ export class MedicineFormPage implements OnInit {
     }
   }
 
-  increment() {
-    this.count += 1; // Aumenta el contador
-  }
-
   decrement() {
-    if (this.count > 0) {
-      this.count -= 1; // Disminuye el contador solo si es mayor que 0
-    }
+  if (this.count > 1) {
+    this.count--;
+  }
+}
+
+increment() {
+  this.count++;
+}
+
+onCounterChange(event: any) {
+  let value = event.target.value;
+  if (value < 1) {
+    this.count = 1;
+  } else {
+    this.count = value;
+  }
+}
+
+  cancel() {
+    // Navega al apartado de medicamentos (ajusta la ruta según tu estructura)
+    this.navCtrl.pop();
   }
 }
