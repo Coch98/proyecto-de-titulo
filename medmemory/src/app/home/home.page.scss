@@ -69,6 +69,12 @@ p {
   background-color: #26b609;  /* Fondo verde */
   border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
   font-size: 16px;
+  position: fixed;
+  bottom: 5px; /* Ajusta este valor para mover el botón hacia arriba o hacia abajo */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100; /* Asegura que el botón esté por encima del contenido */
+  width: 90%; /* Ajusta el tamaño del botón según lo que desees */
 }
 
 ion-tab-bar {
@@ -89,5 +95,22 @@ ion-tab-bar {
   
   ion-label {
     font-size: 14px;
+  }
+}
+
+ion-card {
+  --background: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0px px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  ion-card-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  ion-card-content {
+    font-size: 16px;
+    color: #555;
   }
 }

@@ -15,6 +15,10 @@ export class MedicinesService {
   getMedicines() {
     return this.firestore.collection('medicines').snapshotChanges();
   }
+
+  getById(id: string){
+    return this,this.firestore.collection('medicines').doc(id).get();
+  }
   
   updateMedicine(id: string, data: any) {
     return this.firestore.collection('medicines').doc(id).update(data);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController} from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';  // Importa el servicio
 import firebase from 'firebase/compat/app'; // Importa firebase para usar Timestamp
 
@@ -15,7 +15,7 @@ export class MedicineFormPage implements OnInit {
   count: number = 1; // Inicializa el contador
   horas: string[] = [];
 
-  constructor(private fb: FormBuilder, private medicinesService: MedicinesService, private navCtrl: NavController,) {
+  constructor(private fb: FormBuilder, private medicinesService: MedicinesService, private navCtrl: NavController) {
     this.medicamentoForm = this.fb.group({
       nombre: ['', Validators.required],
       frecuencia: ['', Validators.required],
@@ -34,11 +34,12 @@ export class MedicineFormPage implements OnInit {
 
     // Reiniciar los controles de hora en el formulario
     this.horas.forEach((_, index) => {
-      this.medicamentoForm.addControl(`hora${index}`, this.fb.control('', Validators.required));
+      // Establecer 00:00 como valor por defecto para cada hora
+      this.medicamentoForm.addControl(`hora${index}`, this.fb.control('00:00', Validators.required));
     });
-  }
+}
 
-  onSubmit() {
+onSubmit() {
     if (this.medicamentoForm.valid) {
       const medicamentoData = {
         ...this.medicamentoForm.value,
@@ -47,12 +48,12 @@ export class MedicineFormPage implements OnInit {
 
       // Convertir las horas a objetos timestamp
       const hoursArray = this.horas.map((_, index) => {
-        const horaValue = this.medicamentoForm.get(`hora${index}`)?.value; // Obtiene el valor de la hora
-        return horaValue ? firebase.firestore.Timestamp.fromDate(new Date(horaValue)) : null; // Solo crea el Timestamp si hay un valor
+        const horaValue = this.medicamentoForm.get(`hora${index}`)?.value || '00:00'; // Usar '00:00' si no hay valor
+        return firebase.firestore.Timestamp.fromDate(new Date(`1970-01-01T${horaValue}:00`)); // Usar la fecha base para crear el timestamp
       });
 
       // Agregar las horas al objeto de datos del medicamento
-      medicamentoData.horas = hoursArray.filter(hora => hora !== null); // Filtra las horas nulas
+      medicamentoData.horas = hoursArray;
 
       // Guardar en Firestore usando el servicio
       this.medicinesService.addMedicine(medicamentoData).then(() => {
@@ -68,26 +69,26 @@ export class MedicineFormPage implements OnInit {
       this.count = 1;
       this.horas = [];
     }
-  }
+}
 
   decrement() {
-  if (this.count > 1) {
-    this.count--;
+    if (this.count > 1) {
+      this.count--;
+    }
   }
-}
 
-increment() {
-  this.count++;
-}
-
-onCounterChange(event: any) {
-  let value = event.target.value;
-  if (value < 1) {
-    this.count = 1;
-  } else {
-    this.count = value;
+  increment() {
+    this.count++;
   }
-}
+
+  onCounterChange(event: any) {
+    let value = event.target.value;
+    if (value < 1) {
+      this.count = 1;
+    } else {
+      this.count = value;
+    }
+  }
 
   cancel() {
     // Navega al apartado de medicamentos (ajusta la ruta según tu estructura)

@@ -77,20 +77,4 @@
     <!-- Botón de Guardar -->
     <ion-button class="oval-button1" fill="clear" expand="full" type="submit">Guardar Medicamento</ion-button>
   </form>
-
-  <div *ngIf="medicamentos.length > 0">
-    <ion-card *ngFor="let medicamento of medicamentos">
-      <ion-card-header>
-        <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Veces al día: {{ medicamento.frecuencia }} - {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
-        <p *ngFor="let hora of medicamento.horas; let i = index">
-          Hora {{ i + 1 }}: {{ hora.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
-        </p>
-      </ion-card-content>
-    </ion-card>
-  </div>
-  
-
 </ion-content>

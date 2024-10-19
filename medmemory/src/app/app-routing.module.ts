@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'medicine-form',
     loadChildren: () => import('./medicine-form/medicine-form.module').then( m => m.MedicineFormPageModule)
+  },  {
+    path: 'edit-medicine',
+    loadChildren: () => import('./edit-medicine/edit-medicine.module').then( m => m.EditMedicinePageModule)
   },
+
 
 
 ];
