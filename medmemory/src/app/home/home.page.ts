@@ -78,4 +78,7 @@ export class HomePage {
       alert("se elimino usuario")
     })
   }
+  editar(id: string) {
+    this.navCtrl.navigateForward(`/edit-medicine/${id}`); // Navegar a la página de edición con el ID
+  }
 }

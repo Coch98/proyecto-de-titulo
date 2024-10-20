@@ -37,11 +37,22 @@
             <ion-card-header>
               <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
             </ion-card-header>
+          
             <ion-card-content>
-              <p>Veces al día: {{ medicamento.frecuencia }} - {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
-              <p *ngFor="let hora of medicamento.horas; let i = index">
-                Hora {{ i + 1 }}: {{ hora.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
-              </p>
+              <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
+              <p><strong>Tipo de Dosis:</strong> {{ medicamento.tipoDosis }}</p>
+              <p><strong>Cantidad:</strong> {{ medicamento.dosis }}</p>
+          
+              <!-- Mostrar las horas como una lista -->
+              <div *ngIf="medicamento.horas && medicamento.horas.length > 0">
+                <p><strong>Horas:</strong></p>
+                <ul>
+                  <li *ngFor="let hora of medicamento.horas">{{ hora }}</li>
+                </ul>
+              </div>
+              <div *ngIf="(!medicamento.horas || medicamento.horas.length === 0)">
+                <p>No se han programado horas.</p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
@@ -76,15 +87,26 @@
       <ion-content class="ion-padding">
         <!-- Si hay medicamentos, se muestran las tarjetas -->
         <div *ngIf="medicamentos.length > 0 ; else noMedicamentos">
-          <ion-card *ngFor="let medicamento of medicamentos" (click)="eliminar(medicamento.id)">
+          <ion-card *ngFor="let medicamento of medicamentos" (click)="editar(medicamento.id)">
             <ion-card-header>
               <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
             </ion-card-header>
+          
             <ion-card-content>
-              <p>Veces al día: {{ medicamento.frecuencia }} - {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
-              <p *ngFor="let hora of medicamento.horas; let i = index">
-                Hora {{ i + 1 }}: {{ hora.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
-              </p>
+              <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
+              <p><strong>Tipo de Dosis:</strong> {{ medicamento.tipoDosis }}</p>
+              <p><strong>Cantidad:</strong> {{ medicamento.dosis }}</p>
+          
+              <!-- Mostrar las horas como una lista -->
+              <div *ngIf="medicamento.horas && medicamento.horas.length > 0">
+                <p><strong>Horas:</strong></p>
+                <ul>
+                  <li *ngFor="let hora of medicamento.horas">{{ hora }}</li>
+                </ul>
+              </div>
+              <div *ngIf="(!medicamento.horas || medicamento.horas.length === 0)">
+                <p>No se han programado horas.</p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>

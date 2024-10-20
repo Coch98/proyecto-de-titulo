@@ -24,7 +24,6 @@ ion-content {
   flex-direction: column; /* Asegura que el contenido se apile verticalmente */
   height: 100%; /* Asegura que ocupe toda la altura disponible */
   --background: #f1efe8;
-  
 }
 
 form {
@@ -40,19 +39,31 @@ form {
     --background: #f1efe8;
   
     ion-label{
-      color: black;              /* Color gris para las etiquetas */
+      color: black;            
       font-size: 22px;
       font-family: 'Roboto', sans-serif;
       font-weight: bold;
     }
   
     ion-input {
-      --padding-start: 0;       /* Remueve el padding inicial */
       font-size: 16px;          /* Tamaño del texto de entrada */
       color: black;              /* Color del texto */
       font-family: 'Roboto', sans-serif;
     }
-    
+
+    .label-hora{
+      font-size: 16px;
+    }
+
+    .input-hora{
+      width: 40px; // Ajustar el ancho del input de hora
+      text-align: center; // Centrar el texto
+      font-size: 16px; // Tamaño de fuente del input
+    }
+
+    span {
+      font-size: 16px; // Tamaño del separador
+    }
   }
   
   .no-border {
@@ -78,19 +89,7 @@ form {
     background: #26b609;
     border-color: transparent;
   }
-  
-  
-  ion-datetime {
-    --background: #f1efe8; /* Fondo claro para el datetime */
-    --background-rgb: 245, 235, 247;
-    --wheel-fade-background-rgb: #f1efe8;
-    --wheel-highlight-background: #c2f0ba;;
-    --wheel-highlight-border-radius: 48px;
-  }
 
-  ion-datetime::part(wheel-item) {
-    color: #26b609;
-  }
   
   ion-select {
     padding-top: 10px;

@@ -41,17 +41,31 @@
       </ion-item>
     </ion-radio-group>
 
-     <!-- Seleccionar horas usando ion-datetime -->
-     <div *ngFor="let hora of horas; let i = index">
+    <!-- Seleccionar horas usando dos inputs numéricos -->
+    <div *ngFor="let hora of horas; let i = index">
       <ion-item>
-        <ion-label>Selecciona la Hora {{ i + 1 }}</ion-label>
-        <ion-datetime 
-          formControlName="hora{{ i }}" 
-          presentation="time" 
-          display-format="HH:mm"
-          minute-values="0,5,10,15.20,25,30,35,40,45,50,55" 
-          hour-cycle="h23">
-        </ion-datetime>
+        <ion-label class="label-hora">Selecciona la Hora {{ i + 1 }}</ion-label>
+        <ion-input
+          class="input-hora" 
+          type="number" 
+          formControlName="hora{{ i }}Hora" 
+          required
+          min="0"
+          max="23" 
+          inputmode="numeric" 
+          (ionInput)="limitInputLength($event)">
+        </ion-input>
+        <span>:</span>
+        <ion-input 
+          class="input-hora" 
+          type="number" 
+          formControlName="hora{{ i }}Minuto" 
+          required 
+          min="0"
+          max="59" 
+          inputmode="numeric" 
+          (ionInput)="limitInputLength($event)">
+        </ion-input>
       </ion-item>
     </div>
 
