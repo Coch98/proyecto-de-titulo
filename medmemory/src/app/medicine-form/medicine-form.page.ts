@@ -3,6 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';  // Importa el servicio
 
+// Define la interfaz para el medicamento
+interface Medicamento {
+  nombre: string;
+  frecuencia: string;
+  tipoDosis: string;
+  dosis: number;
+  horas: string[]; // Agrega la propiedad horas
+}
+
 @Component({
   selector: 'app-medicine-form',
   templateUrl: './medicine-form.page.html',
@@ -47,22 +56,22 @@ export class MedicineFormPage implements OnInit {
   
   onSubmit() {
     if (this.medicamentoForm.valid) {
-      const medicamentoData = {
-        ...this.medicamentoForm.value,
+      const medicamentoData: Medicamento = {
+        nombre: this.medicamentoForm.value.nombre,
+        frecuencia: this.medicamentoForm.value.frecuencia,
+        tipoDosis: this.medicamentoForm.value.tipoDosis,
         dosis: this.count,
+        horas: [], // Inicializa las horas aquí
       };
   
-      // Convertir las horas a formato HH:mm
+      // Convertir las horas a formato HH:mm y guardarlas en un array
       const hoursArray = this.horas.map((_, index) => {
-        // Obtén los valores y conviértelos a cadenas
-        const hora = String(this.medicamentoForm.get(`hora${index}Hora`)?.value || '00');
-        const minuto = String(this.medicamentoForm.get(`hora${index}Minuto`)?.value || '00');
-        
-        // Asegúrate de que ambos tengan al menos dos caracteres
-        return `${hora.padStart(2, '0')}:${minuto.padStart(2, '0')}`; // Formato HH:mm
+        const hora = String(this.medicamentoForm.get(`hora${index}Hora`)?.value || '00').padStart(2, '0');
+        const minuto = String(this.medicamentoForm.get(`hora${index}Minuto`)?.value || '00').padStart(2, '0');
+        return `${hora}:${minuto}`; // Formato HH:mm
       });
   
-      // Agregar las horas al objeto de datos del medicamento
+      // Agregar solo el array de horas
       medicamentoData.horas = hoursArray;
   
       // Guardar en Firestore usando el servicio

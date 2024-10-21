@@ -10,23 +10,25 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./edit-medicine.page.scss'],
 })
 export class EditMedicinePage implements OnInit {
-
   medicamentoForm: FormGroup;
+  medicamento: any; // Para almacenar los datos del medicamento
   id: string = ''; // Para almacenar el ID del medicamento
   count: number = 1; // Inicializa el contador
+  horas: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private medicinesService: MedicinesService,
+    private navCtrl: NavController,
     private fb: FormBuilder,
-    private navCtrl: NavController
   ) {
     // Inicializa el formulario
     this.medicamentoForm = this.fb.group({
       nombre: ['', Validators.required],
       frecuencia: ['', Validators.required],
       tipoDosis: ['', Validators.required],
-      dosis: ['', Validators.required]
+      dosis: ['', Validators.required],
+      horas: [[]], // Almacena las horas como un array
     });
   }
 
@@ -35,46 +37,55 @@ export class EditMedicinePage implements OnInit {
     this.loadMedicamento();
   }
 
-  onFrecuenciaChange(event: any) {
-    const frecuencia = event.detail.value;
-    
-    // Reiniciar el FormArray
-    const horasArray = this.medicamentoForm.get('horas') as FormArray;
-    horasArray.clear(); // Limpiar horas anteriores
-
-    // Establecer 00:00 como valor por defecto para cada hora
-    for (let index = 0; index < frecuencia; index++) {
-      horasArray.push(this.fb.control('00:00', Validators.required));
-    }
-  }
-
   loadMedicamento() {
     if (this.id) {
       this.medicinesService.getMedicines().subscribe(medicines => {
         const medicamento = medicines.find(med => med.payload.doc.id === this.id);
         if (medicamento) {
-          const data = medicamento.payload.doc.data() as any; // Temporalmente indica que 'data' es de tipo 'any'
+          this.medicamento = medicamento.payload.doc.data(); // Almacena el medicamento
           this.medicamentoForm.patchValue({
-            nombre: data.nombre,
-            frecuencia: data.frecuencia,
-            tipoDosis: data.tipoDosis,
-            dosis: data.dosis,
+            nombre: this.medicamento.nombre,
+            tipoDosis: this.medicamento.tipoDosis,
+            dosis: this.medicamento.dosis,
           });
-
-          // Cargar horas en el FormArray
-          const horasArray = this.medicamentoForm.get('horas') as FormArray;
-          data.horas.forEach((hora: string) => horasArray.push(this.fb.control(hora)));
         }
       });
     }
   }
 
-  // Lógica para actualizar el medicamento
-  actualizarMedicamento() {
+  onFrecuenciaChange(event: any) {
+    const frecuencia = event.detail.value;
+    this.horas = Array.from({ length: frecuencia }, (_, index) => `hora${index}`);
+  
+    // Reiniciar los controles de hora en el formulario
+    this.horas.forEach((_, index) => {
+      this.medicamentoForm.addControl(`hora${index}Hora`, this.fb.control('08', Validators.required));
+      this.medicamentoForm.addControl(`hora${index}Minuto`, this.fb.control('00', Validators.required));
+    });
+  }
+
+  limitInputLength(event: any) {
+    const value = event.target.value;
+    if (value.length > 2) {
+      event.target.value = value.slice(0, 2); // Limitar a 2 caracteres
+    }
+  }
+
+   // Lógica para actualizar el medicamento
+   actualizarMedicamento() {
+    
     if (this.medicamentoForm.valid) {
+      const horasActualizadas = this.horas.map((_, index) => {
+        const hora = this.medicamentoForm.get(`hora${index}Hora`)?.value;
+        const minuto = this.medicamentoForm.get(`hora${index}Minuto`)?.value;
+        return `${hora}:${minuto}`;
+      });
+      
+      this.medicamentoForm.patchValue({ dosis: this.count,  horas: horasActualizadas });
       this.medicinesService.updateMedicine(this.id, this.medicamentoForm.value)
         .then(() => {
           alert('Medicamento actualizado exitosamente');
+          //this.navCtrl.pop(); // Regresar a la lista de medicamentos o donde quieras
         })
         .catch(err => {
           console.error('Error actualizando el medicamento:', err);
@@ -102,6 +113,7 @@ export class EditMedicinePage implements OnInit {
   }
 
   cancel() {
+    // Navega al apartado de medicamentos (ajusta la ruta según tu estructura)
     this.navCtrl.pop();
   }
 }
