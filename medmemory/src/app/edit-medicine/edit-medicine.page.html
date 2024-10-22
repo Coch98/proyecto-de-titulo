@@ -11,16 +11,12 @@
   <ion-card *ngIf="medicamento">
     <ion-card-header>
       <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
-      <ion-card-subtitle>Tipo: {{ medicamento.tipoDosis }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
       <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
       <p><strong>Dosis:</strong> {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
-      <p><strong>Horas:</strong></p>
-      <ul>
-        <li *ngFor="let hora of medicamento.horas">{{ hora }}</li>
-      </ul>
+      <p><strong>Horas:</strong> {{ medicamento.horas.join(' - ') }}</p>
     </ion-card-content>
   </ion-card>
 
@@ -102,7 +98,8 @@
     </div>
 
 
-    <ion-button expand="full" type="submit">Guardar</ion-button>
+    <ion-button class="oval-button1" fill="clear" expand="full" type="submit">Guardar Cambios</ion-button>
+    <ion-button class="oval-button2" expand="full" fill="clear" (click)="confirmarEliminacion(id)">Eliminar Recordatorio</ion-button>
   </form>
 </ion-content>
 

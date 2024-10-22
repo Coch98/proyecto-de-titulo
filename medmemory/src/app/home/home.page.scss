@@ -34,6 +34,40 @@ ion-toolbar {
 
 ion-content{
   --background: #f1efe8;
+  display: flex;
+  flex-direction: column; /* Asegura que el contenido se apile verticalmente */
+  height: 100%; /* Asegura que ocupe toda la altura disponible */
+
+  .medicamentos-container {
+    padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
+  }
+
+  .selected-card {
+    background-color:#c9c7c2; /* Cambia el color de fondo cuando está seleccionado */
+    transition: background-color 0.3s ease; /* Agrega una transición suave */
+  }  
+
+  ion-card {
+    background: #ffffff;
+    border-radius: 100px;
+    box-shadow: 0px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;   
+
+    ion-card-header{
+      padding: 16px 0px 5px 0px;
+      
+    }
+  
+    ion-card-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    ion-card-content {
+      font-size: 18px;
+      color: black;
+    }
+  }
 }
 
 ion-menu{
@@ -59,7 +93,6 @@ h2 {
 p {
   font-family: 'Roboto', sans-serif;
   color: #333; /* Color del texto del subtítulo */
-  margin-bottom: 20px; /* Espacio debajo del subtítulo */
   text-align: center;
 }
 
@@ -96,21 +129,5 @@ ion-tab-bar {
   ion-label {
     font-size: 14px;
   }
-}
-
-ion-card {
-  --background: #ffffff;
-  --border-radius: 12px;
-  --box-shadow: 0px px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-
-  ion-card-title {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  ion-card-content {
-    font-size: 16px;
-    color: #555;
-  }
+  
 }

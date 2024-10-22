@@ -30,29 +30,18 @@
         </ion-buttons>
       </ion-toolbar>
   
-      <ion-content class="ion-padding">
+      <ion-content>
         <div *ngIf="medicamentos.length > 0; else noRecordatorios">
           <!-- Mostrar las tarjetas de medicamentos si hay datos -->
           <ion-card *ngFor="let medicamento of medicamentos">
             <ion-card-header>
               <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
             </ion-card-header>
-          
+        
             <ion-card-content>
               <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
-              <p><strong>Tipo de Dosis:</strong> {{ medicamento.tipoDosis }}</p>
-              <p><strong>Cantidad:</strong> {{ medicamento.dosis }}</p>
-          
-              <!-- Mostrar las horas como una lista -->
-              <div *ngIf="medicamento.horas && medicamento.horas.length > 0">
-                <p><strong>Horas:</strong></p>
-                <ul>
-                  <li *ngFor="let hora of medicamento.horas">{{ hora }}</li>
-                </ul>
-              </div>
-              <div *ngIf="(!medicamento.horas || medicamento.horas.length === 0)">
-                <p>No se han programado horas.</p>
-              </div>
+              <p><strong>Dosis:</strong> {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
+              <p><strong>Horas:</strong> {{ medicamento.horas.join(' - ') }}</p>
             </ion-card-content>
           </ion-card>
         </div>
@@ -84,29 +73,18 @@
         </ion-buttons>
       </ion-toolbar>
   
-      <ion-content class="ion-padding">
+      <ion-content>
         <!-- Si hay medicamentos, se muestran las tarjetas -->
-        <div *ngIf="medicamentos.length > 0 ; else noMedicamentos">
-          <ion-card *ngFor="let medicamento of medicamentos" (click)="editar(medicamento.id)">
+        <div class="medicamentos-container" *ngIf="medicamentos.length > 0 ; else noMedicamentos">
+          <ion-card *ngFor="let medicamento of medicamentos" (click)="editar(medicamento.id)"  [ngClass]="{'selected-card': selectedCardId === medicamento.id}">
             <ion-card-header>
               <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
             </ion-card-header>
-          
+        
             <ion-card-content>
               <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
-              <p><strong>Tipo de Dosis:</strong> {{ medicamento.tipoDosis }}</p>
-              <p><strong>Cantidad:</strong> {{ medicamento.dosis }}</p>
-          
-              <!-- Mostrar las horas como una lista -->
-              <div *ngIf="medicamento.horas && medicamento.horas.length > 0">
-                <p><strong>Horas:</strong></p>
-                <ul>
-                  <li *ngFor="let hora of medicamento.horas">{{ hora }}</li>
-                </ul>
-              </div>
-              <div *ngIf="(!medicamento.horas || medicamento.horas.length === 0)">
-                <p>No se han programado horas.</p>
-              </div>
+              <p><strong>Dosis:</strong> {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
+              <p><strong>Horas:</strong> {{ medicamento.horas.join(' - ') }}</p>
             </ion-card-content>
           </ion-card>
         </div>

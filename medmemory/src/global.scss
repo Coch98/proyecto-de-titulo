@@ -39,7 +39,7 @@
 .custom-alert {
     // Cambia el fondo del alert
     .alert-wrapper {
-      background-color: #ece6d1; // Cambia esto al color que desees
+      background-color: #f1efe8; // Cambia esto al color que desees
       border-radius: 15px; // Bordes redondeados
     }
     
@@ -63,11 +63,22 @@
     .custom-logout-button{
       color: #26b609; // Color del texto del botón
       font-weight: bold; // Negrita
+      font-size: 15px;
+      margin: 0 auto; // Centra el botón
     }
 
     .custom-cancel-button{
       color: #d41010; // Color del texto del botón
-      font-weight: bold; // Negrita
+      font-weight: bold;// Negrita
+      font-size: 15px;
+      margin: 0 auto; // Centra el botón
+    }
+
+    .custom-delete-button{
+      color: #26b609; // Color del texto del botón
+      font-weight: bold; 
+      font-size: 15px;
+      margin: 0 auto; // Centra el botón
     }
   }
   

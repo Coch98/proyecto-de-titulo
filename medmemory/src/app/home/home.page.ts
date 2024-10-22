@@ -12,6 +12,7 @@ import { MedicinesService } from '../services/medicines.service';
 export class HomePage {
   userName: string = '';
   medicamentos: any[] = [];  // Inicializa un array para los medicamentos
+  selectedCardId: string | null = null; 
 
   // Obtén una referencia a IonTabs
   @ViewChild('tabs', { static: false }) tabs!: IonTabs;
@@ -79,6 +80,12 @@ export class HomePage {
     })
   }
   editar(id: string) {
-    this.navCtrl.navigateForward(`/edit-medicine/${id}`); // Navegar a la página de edición con el ID
+    this.selectedCardId = id; // Cambia el ID de la tarjeta seleccionada
+  
+    // Restaura el estado de selección después de un breve retraso
+    setTimeout(() => {
+      this.navCtrl.navigateForward(`/edit-medicine/${id}`);
+      this.selectedCardId = null; // Restaura el estado después de 200ms
+    }, 150);
   }
 }

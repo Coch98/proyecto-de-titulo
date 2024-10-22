@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';  // Importa el servicio
 
 // Define la interfaz para el medicamento
@@ -23,7 +23,12 @@ export class MedicineFormPage implements OnInit {
   count: number = 1; // Inicializa el contador
   horas: string[] = [];
 
-  constructor(private fb: FormBuilder, private medicinesService: MedicinesService, private navCtrl: NavController) {
+  constructor(
+    private fb: FormBuilder, 
+    private medicinesService: MedicinesService, 
+    private navCtrl: NavController,
+    private alertController: AlertController
+  ) {
     this.medicamentoForm = this.fb.group({
       nombre: ['', Validators.required],
       frecuencia: ['', Validators.required],
@@ -76,6 +81,7 @@ export class MedicineFormPage implements OnInit {
   
       // Guardar en Firestore usando el servicio
       this.medicinesService.addMedicine(medicamentoData).then(() => {
+        this.mostrarAlertaExito();
         console.log('Medicamento guardado exitosamente');
       }).catch(error => {
         console.error('Error al guardar el medicamento:', error);
@@ -88,6 +94,25 @@ export class MedicineFormPage implements OnInit {
       this.count = 1;
       this.horas = [];
     }
+  }
+
+  async mostrarAlertaExito() {
+    const alert = await this.alertController.create({
+      header: 'Éxito',
+      message: 'Medicamento agregado exitosamente.',
+      buttons: [
+        {
+          text:'OK',
+          cssClass: 'custom-alert-button',
+          handler: () =>{
+            this.navCtrl.pop()
+          },
+      }],
+      backdropDismiss: false,
+      cssClass: 'custom-alert'  
+    });
+  
+    await alert.present();
   }
   
   
