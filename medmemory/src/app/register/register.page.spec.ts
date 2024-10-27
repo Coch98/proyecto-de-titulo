@@ -66,4 +66,20 @@ describe('RegisterPage', () => {
     expect(component.user.email).toBe('');
     expect(component.user.password).toBe('');
   }));
+
+  it('should handle registration error', fakeAsync(() => {
+    authServiceSpy.registerUser.and.returnValue(Promise.reject('Registration error'));
+
+    component.user = {
+      name: 'Test User',
+      email: 'testuser@example.com',
+      password: 'password123'
+    };
+
+    component.onRegister();
+    tick();
+
+    expect(component.errorMessage).toBe('Formato de correo invalido');
+  }));
+  
 });

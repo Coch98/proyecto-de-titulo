@@ -15,7 +15,7 @@
 
 <ion-tabs #tabs>
    <!-- Tab Home -->
-   <ion-tab tab="home">
+   <ion-tab tab="reminders">
     <div class="ion-page" id="main-content">
       <ion-toolbar>
         <!-- Título centrado -->
@@ -30,33 +30,83 @@
         </ion-buttons>
       </ion-toolbar>
   
-      <ion-content class="ion-padding">
-        <div class="example-content">
-          <h2>¡Vea aquí sus recordatorios!</h2>
-          <p>Sus tareas apareceran cuando las programe en Recordatorios.</p>
-          <ion-button class="oval-button" expand="full" fill="clear" (click)="goToReminders()">Ir a Recordatorios</ion-button>
+      <ion-content>
+        <div *ngIf="medicamentos.length > 0; else noRecordatorios">
+          <!-- Mostrar las tarjetas de medicamentos si hay datos -->
+          <ion-card *ngFor="let medicamento of medicamentos">
+            <ion-card-header>
+              <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
+            </ion-card-header>
+        
+            <ion-card-content>
+              <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
+              <p><strong>Dosis:</strong> {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
+              <p><strong>Horas:</strong> {{ medicamento.horas.join(' - ') }}</p>
+            </ion-card-content>
+          </ion-card>
         </div>
+      
+        <!-- Mensaje por defecto cuando no hay recordatorios -->
+        <ng-template #noRecordatorios>
+          <div class="example-content">
+            <h2>¡Vea aquí sus recordatorios!</h2>
+            <p>Sus tareas apareceran cuando las programe en Medicamentos o Citas.</p>
+          </div>
+        </ng-template>
       </ion-content>
     </div>
   </ion-tab>
 
    <!-- Tab Recordatorios -->
-   <ion-tab tab="reminders">
-    <ion-nav id="reminders-nav"></ion-nav>
-    <div id="reminders-page">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Recordatorios</ion-title>
-        </ion-toolbar>
-      </ion-header>
+   <ion-tab tab="medicine">
+    <div class="ion-page" id="main-content">
+      <ion-toolbar>
+        <!-- Título centrado -->
+        <ion-title class="title-container">Medicamentos</ion-title>
+  
+        <!-- Botones de notificaciones y menú -->
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon name="notifications-outline"></ion-icon>
+          </ion-button>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+  
       <ion-content>
-        <div class="example-content">
-          Aquí puedes ver tus recordatorios.
+        <!-- Si hay medicamentos, se muestran las tarjetas -->
+        <div class="medicamentos-container" *ngIf="medicamentos.length > 0 ; else noMedicamentos">
+          <ion-card *ngFor="let medicamento of medicamentos" (click)="editar(medicamento.id)"  [ngClass]="{'selected-card': selectedCardId === medicamento.id}">
+            <ion-card-header>
+              <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
+            </ion-card-header>
+        
+            <ion-card-content>
+              <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
+              <p><strong>Dosis:</strong> {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
+              <p><strong>Horas:</strong> {{ medicamento.horas.join(' - ') }}</p>
+            </ion-card-content>
+          </ion-card>
         </div>
+  
+        <!-- Mensaje cuando no hay medicamentos -->
+        <ng-template #noMedicamentos>
+          <div class="example-content">
+            <h2>¡Comencemos!</h2>
+            <p>No tienes medicamentos programados aún.</p>
+          </div>
+        </ng-template>
       </ion-content>
+  
+        <!-- Botón Agregar Medicamento siempre visible -->
+        <ion-footer>
+          <ion-button class="oval-button" expand="full" fill="clear" (click)="goToMedicineForm()">
+            Agregar Medicamento
+          </ion-button>
+        </ion-footer>
     </div>
   </ion-tab>
-
+  
   <!-- Tab Citas Médicas -->
   <ion-tab tab="appointments">
     <ion-nav id="appointments-nav"></ion-nav>
@@ -93,14 +143,14 @@
 
   <!-- Barra de Tabs en la parte inferior -->
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
-      <ion-icon name="home-outline"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-
     <ion-tab-button tab="reminders">
       <ion-icon name="alarm-outline"></ion-icon>
       <ion-label>Recordatorios</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="medicine">
+      <ion-icon name="medkit-outline"></ion-icon>
+      <ion-label>Medicamentos</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="appointments">
