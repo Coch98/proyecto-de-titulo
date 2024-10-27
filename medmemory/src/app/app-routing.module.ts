@@ -8,9 +8,28 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'medicine-form',
+    loadChildren: () => import('./medicine-form/medicine-form.module').then( m => m.MedicineFormPageModule)
+  },
+  {
+    path: 'edit-medicine/:id',
+    loadChildren: () => import('./edit-medicine/edit-medicine.module').then( m => m.EditMedicinePageModule)
+  },
+
+
+
 ];
 
 @NgModule({

@@ -1,0 +1,77 @@
+<ion-content>
+  <form (submit)="onRegister()" #registerForm="ngForm">
+    <!-- Título con estilo ovalado -->
+    <ion-title>
+      Registro
+    </ion-title>
+    
+    <!-- Campo Nombre Completo -->
+    <ion-item>
+      <ion-label position="stacked">Nombre Completo</ion-label>
+      <ion-input [(ngModel)]="user.name" name="name" required #name="ngModel"></ion-input>
+    </ion-item>
+    <!-- Mensaje de error para el nombre -->
+    <div *ngIf="name.invalid && name.touched" class="error-message">
+      <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
+      Campo obligatorio
+    </div>
+
+    <!-- Campo Correo Electrónico -->
+    <ion-item>
+      <ion-label position="stacked">Correo Electrónico</ion-label>
+      <ion-input 
+        type="email" 
+        [(ngModel)]="user.email" 
+        name="email" 
+        required
+        email
+        #email="ngModel"
+        (ionInput)="onEmailChange()">
+      </ion-input>
+    </ion-item>
+    <!-- Mensaje de error para el correo -->
+    <div *ngIf="email.invalid && email.touched" class="error-message">
+      <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
+      <div *ngIf="email.errors?.['required']">Campo obligatorio</div>
+      <div *ngIf="email.errors?.['email']">La direccion de correo no es válida</div>
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Campo Contraseña -->
+    <ion-item>
+      <ion-label position="stacked">Contraseña</ion-label>
+      <ion-input 
+        [type]="passwordVisible ? 'text' : 'password'" 
+        [(ngModel)]="user.password" 
+        name="password" 
+        required
+        minlength="8"
+        #password="ngModel">
+      </ion-input>
+      <ion-icon 
+        [name]="passwordVisible ? 'eye-off' : 'eye'" 
+        slot="end" 
+        (click)="togglePasswordVisibility()"></ion-icon>
+    </ion-item>
+
+    <!-- Mensaje de error para la contraseña -->
+    <div *ngIf="password.invalid && password.touched" class="error-message">
+      <ion-icon class="alert-icon" name="alert-circle-outline"></ion-icon>
+      <div *ngIf="password.errors?.['required']">Campo obligatorio</div>
+      <div *ngIf="password.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</div>
+    </div>
+
+    <!-- Botón Crear Cuenta -->
+    <ion-button class="oval-button1" expand="full" fill="clear" type="submit" [disabled]="registerForm.invalid">
+      Crear Cuenta
+    </ion-button>
+
+    <!-- Botón Cancelar -->
+    <ion-button class="oval-button2" expand="full" fill="clear" (click)="cancelRegistration()">
+      Cancelar
+    </ion-button>
+  </form>
+</ion-content>

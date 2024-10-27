@@ -1,27 +1,133 @@
-#container {
+.logout-button {
+  --background: #df1b1b; /* Color de fondo del botón de cerrar sesión */
+  color: white; /* Color del texto del botón */
+  font-weight: bold; /* Negrita */
+}
+
+ion-toolbar {
+  --background: #26b609; /* Color de fondo verde para la barra superior */
+
+  .title-container {
+    display: flex;
+    justify-content: center; /* Centra el título horizontalmente */
+    text-align: center;
+    transform: translateX(46px);
+  }
+  
+  ion-title {
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+  }
+
+  ion-buttons {
+    ion-icon {
+      font-size: 24px;
+      color: white;
+    }
+  
+    ion-menu-button {
+      color: white; /* Cambia el color del botón de menú a blanco */
+    }
+  }
+}
+
+ion-content{
+  --background: #f1efe8;
+  display: flex;
+  flex-direction: column; /* Asegura que el contenido se apile verticalmente */
+  height: 100%; /* Asegura que ocupe toda la altura disponible */
+
+  .medicamentos-container {
+    padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
+  }
+
+  .selected-card {
+    background-color:#c9c7c2; /* Cambia el color de fondo cuando está seleccionado */
+    transition: background-color 0.3s ease; /* Agrega una transición suave */
+  }  
+
+  ion-card {
+    background: #ffffff;
+    border-radius: 100px;
+    box-shadow: 0px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;   
+
+    ion-card-header{
+      padding: 16px 0px 5px 0px;
+      
+    }
+  
+    ion-card-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    ion-card-content {
+      font-size: 18px;
+      color: black;
+    }
+  }
+}
+
+ion-menu{
+ --background: #f1efe8; 
+}
+
+.example-content {
+  display: flex;
+  flex-direction: column; /* Apilar los elementos verticalmente */
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Asegura que el contenedor ocupe toda la altura */
+  text-align: center; /* Para centrar el texto de los elementos */
+}
+
+h2 {
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-bottom: 10px; /* Espacio debajo del título */
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+p {
+  font-family: 'Roboto', sans-serif;
+  color: #333; /* Color del texto del subtítulo */
+  text-align: center;
 }
 
-#container p {
+.oval-button {
+  padding: 6px 18px;          /* Espaciado interno del botón */
+  color: white;               /* Color del texto */
+  background-color: #26b609;  /* Fondo verde */
+  border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
   font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+  position: fixed;
+  bottom: 5px; /* Ajusta este valor para mover el botón hacia arriba o hacia abajo */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100; /* Asegura que el botón esté por encima del contenido */
+  width: 90%; /* Ajusta el tamaño del botón según lo que desees */
 }
 
-#container a {
-  text-decoration: none;
+ion-tab-bar {
+  --ion-color-primary: #26b609; /* Cambia el color activo a verde */
+  
+  ion-tab-button {
+    --color: #646363; /* Color de los iconos y texto inactivos */
+  
+  &.tab-selected {
+      /* Estilos para el botón cuando está seleccionado */
+      color: #26b609; /* Cambia a verde cuando está activo */
+    }
+  }
+  
+  ion-icon {
+    font-size: 22px;
+  }
+  
+  ion-label {
+    font-size: 14px;
+  }
+  
 }

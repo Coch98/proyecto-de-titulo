@@ -1,0 +1,186 @@
+ion-toolbar {
+    --background: #26b609; /* Color de fondo verde para la barra superior */
+  
+    .title-container {
+      display: flex;
+      justify-content: center; /* Centra el título horizontalmente */
+      text-align: center;
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      transform: translateX(-20px);
+    }
+  
+    ion-buttons {
+      .arrow-back-outline {
+        font-size: 24px;
+        color: white;
+      }
+    }
+  }
+  
+  ion-content {
+    display: flex;
+    flex-direction: column; /* Asegura que el contenido se apile verticalmente */
+    height: 100%; /* Asegura que ocupe toda la altura disponible */
+    --background: #f1efe8;
+
+    ion-card {
+      background: #ffffff;
+      border-radius: 100px;
+      box-shadow: 0px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+
+      ion-card-header{
+        padding: 16px 0px 5px 0px;
+        
+      }
+    
+      ion-card-title {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    
+      ion-card-content {
+        font-size: 18px;
+        color: black;
+      }
+    }
+  }
+  
+  form {
+    flex: 1; /* Hace que el formulario ocupe el espacio restante */
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos del formulario se apilen verticalmente */
+    justify-content: center; /* Centra verticalmente el contenido */
+    --background: #f1efe8;
+  
+    ion-item{
+    
+      --border-radius: 8px; /* Bordes redondeados */
+      --background: #f1efe8;
+    
+      ion-label{
+        color: black;            
+        font-size: 22px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+      }
+    
+      ion-input {
+        font-size: 16px;          /* Tamaño del texto de entrada */
+        color: black;              /* Color del texto */
+        font-family: 'Roboto', sans-serif;
+      }
+  
+      .label-hora{
+        font-size: 16px;
+      }
+  
+      .input-hora{
+        width: 40px; // Ajustar el ancho del input de hora
+        text-align: center; // Centrar el texto
+        font-size: 16px; // Tamaño de fuente del input
+      }
+  
+      span {
+        font-size: 16px; // Tamaño del separador
+      }
+    }
+    
+    .no-border {
+      --border-width: 0; /* Elimina el borde */
+      --border-color: transparent; /* Asegura que no haya color de borde */
+    }
+    
+    ion-radio::part(container) {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 2px solid #a8a8a8;
+    }
+    
+    ion-radio::part(mark) {
+      background: none;
+      transition: none;
+      transform: none;
+      border-radius: 0;
+    }
+    
+    ion-radio.radio-checked::part(container) {
+      background: #26b609;
+      border-color: transparent;
+    }
+  
+    
+    ion-select {
+      padding-top: 10px;
+    }
+    
+    ion-select::part(label) {
+      font-weight: bold; /* Cambia el label a negrita */
+    }
+    
+    ion-select-option {
+      --color: #333; /* Color del texto de las opciones */
+      --background: #ffffff; /* Fondo claro para las opciones */
+    }
+    
+    .counter__section {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+    
+      #counter-input {
+        width: 50px;
+        height: 35px;
+        text-align: center;
+        margin: 0 -120px;
+        border: 2px solid #26b609; /* Cambia el color del borde aquí */
+        border-radius: 5px; /* Bordes redondeados */
+        padding: 5px; /* Espaciado interno */
+        font-weight: bold; /* Opcional, para resaltar el número */
+        background-color: #f1efe8;
+    
+        &:focus {
+          border-color: #26b609; /* Color del borde al enfocar */
+          outline: none; /* Quita el contorno por defecto */
+        }
+      }
+    
+      .counter-label {
+        padding-left: 15px;
+        font-weight: bold;
+      }
+    
+      ion-button {
+        --background: #26b609; /* Cambia el color de fondo del botón */
+        --color: white;        /* Cambia el color del texto (el símbolo + o -) */
+        width: 40px;           /* Ajusta el tamaño del botón */
+        height: 35px;          /* Ajusta la altura del botón */
+        font-size: 15px;       /* Ajusta el tamaño de la fuente para + y - */
+      }
+    }
+    
+    .oval-button1 {
+      padding: 0px;          /* Espaciado interno del botón */
+      color: white;               /* Color del texto */
+      background-color: #26b609;  /* Fondo verde */
+      border-radius: 35px;        /* Bordes redondeados para un efecto ovalado */
+      font-size: 16px;
+    }
+
+    .oval-button2 {
+      padding: 0px;          /* Espaciado interno del botón */
+      color: white;               /* Color del texto */
+      background-color: #df1b1b;  /* Fondo rojo */
+      border-radius: 35px;        /* Bordes redondeados para un efecto ovalado */
+      font-size: 16px;
+    }
+  }
+  
+  
+  
+  

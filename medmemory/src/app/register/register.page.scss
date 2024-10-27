@@ -1,0 +1,102 @@
+ion-content {
+    display: flex;
+    justify-content: center;      /* Centra el contenido horizontalmente */
+    align-items: center;          /* Centra el contenido verticalmente */
+    height: 100%;                 /* Asegura que el contenido ocupe toda la altura de la página */
+    padding: 20px;
+    --background: #f1efe8;          /* Color de fondo de la página */
+  }
+  
+  form {
+    flex: 1; /* Hace que el formulario ocupe el espacio restante */
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos del formulario se apilen verticalmente */
+    justify-content: center; /* Centra verticalmente el contenido */           /* Limita el ancho máximo del formulario */
+    background-color:#f1efe8;    /* Fondo blanco para el formulario */
+    padding: 20px;
+    border-radius: 10px;          /* Bordes redondeados para darle un aspecto suave */
+  
+    ion-title {
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+      font-size: 24px;
+      margin-bottom: 20px;        /* Espacio debajo del título */
+      padding: 10px 70px;       /* Espaciado interno del título */
+      background-color: #26b609;/* Color de fondo verde */
+      border-radius: 50px;      /* Bordes redondeados para crear el efecto ovalado */
+      color: #fff;              /* Color del texto */
+      text-align: center;       /* Centra el texto */  
+    }
+  
+    ion-item {
+      --background: transparent;  /* Fondo transparente para los ítems */
+      margin-bottom: 15px;        /* Espacio entre cada ítem */
+  
+      ion-label {
+        color: #555;              /* Color gris para las etiquetas */
+        font-size: 22px;
+        font-family: 'Roboto', sans-serif;
+      }
+  
+      ion-input {
+        --padding-start: 0;       /* Remueve el padding inicial */
+        font-size: 16px;          /* Tamaño del texto de entrada */
+        color: #333;              /* Color del texto */
+        font-family: 'Roboto', sans-serif;
+      }
+    }
+  
+    ion-button {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;           /* Espacio encima de los botones */
+    }
+  
+    .oval-button1 {
+      padding: 6px 20px;          /* Espaciado interno del botón */
+      color: white;               /* Color del texto */
+      background-color: #26b609;  /* Fondo verde */
+      border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
+      font-size: 16px;
+    }
+  
+    .oval-button2 {
+      padding: 6px 20px;          /* Espaciado interno del botón */
+      color: white;               /* Color del texto */
+      background-color: #df1b1b;  /* Fondo rojo */
+      border-radius: 50px;        /* Bordes redondeados para un efecto ovalado */
+      font-size: 16px;
+    }
+
+    ion-icon {
+      cursor: pointer; /* Cambia el cursor a mano al pasar sobre el ícono */
+      margin-left: 25px; /* Espacio entre el input y el ícono */
+      transform: translateY(29px);
+    }
+
+    .error-message {
+      display: flex;
+      align-items: center;
+      color: #ff4d4d;
+      font-size: 14px;
+      margin-left: -10px;
+    }
+
+    .alert-icon {
+      margin-right: 5px; /* Espacio entre el ícono y el texto */
+      font-size: 16px; /* Tamaño del ícono */
+      color: #ff4d4d;  /* Color del ícono de alerta */
+      transform: translateY(-1px);
+    }
+
+    .oval-button1:active{
+      background-color: #218e08; /* Cambio en hover */
+      transform: scale(0.95); /* Efecto de presionado */
+    }
+    
+    .oval-button2:active{
+      background-color: #ff4d4d; /* Cambio en hover */
+      transform: scale(0.95); /* Efecto de presionado */
+    } 
+  }
+  
