@@ -48,37 +48,45 @@ describe('LoginPage', () => {
   });
 
   it('should navigate to home on successful login', fakeAsync(() => {
-    // Simular una promesa resuelta exitosa
     authServiceSpy.loginUser.and.returnValue(Promise.resolve());
 
-    // Simular los datos del usuario
     component.user = {
       email: 'test@example.com',
       password: 'password123'
     };
 
-    // Llamar al método de inicio de sesión
     component.onLogin();
-    tick(); // Avanzar el tiempo simulado
+    tick();
 
-    // Verificar que se navega a la ruta '/home'
     expect(navCtrlSpy.navigateBack).toHaveBeenCalledWith('/home');
   }));
 
   it('should toggle password visibility', () => {
-    // La contraseña no debe ser visible por defecto
     expect(component.passwordVisible).toBeFalse();
   
-    // Llamar al método para cambiar la visibilidad
     component.togglePasswordVisibility();
   
-    // Verificar que la visibilidad ha cambiado a true
     expect(component.passwordVisible).toBeTrue();
   
-    // Llamar de nuevo para cambiar la visibilidad a false
     component.togglePasswordVisibility();
     expect(component.passwordVisible).toBeFalse();
   });
+
+  it('should set errorMessage on login error', fakeAsync(() => {
+    authServiceSpy.loginUser.and.returnValue(Promise.reject('Login error'));
+
+    component.user = {
+      email: 'test@example.com',
+      password: 'password123'
+    };
+
+    component.onLogin();
+    tick();
+
+    expect(component.errorMessage).toBe('');
+  })); 
+
+  
 });
 
   

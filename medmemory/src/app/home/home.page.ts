@@ -74,11 +74,6 @@ export class HomePage {
     this.navCtrl.navigateForward('/medicine-form');
   }
 
-  eliminar(id: string){
-    this.medicinesService.deleteMedicine(id).then(res =>{
-      alert("se elimino usuario")
-    })
-  }
   editar(id: string) {
     this.selectedCardId = id; // Cambia el ID de la tarjeta seleccionada
   
