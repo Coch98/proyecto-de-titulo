@@ -74,6 +74,10 @@ export class HomePage {
     this.navCtrl.navigateForward('/medicine-form');
   }
 
+  goToAppointmentForm(){
+    this.navCtrl.navigateForward('/appointment-form')
+  }
+
   editar(id: string) {
     this.selectedCardId = id; // Cambia el ID de la tarjeta seleccionada
   

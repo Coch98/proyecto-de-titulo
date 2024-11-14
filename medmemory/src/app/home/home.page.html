@@ -108,21 +108,44 @@
   </ion-tab>
   
   <!-- Tab Citas Médicas -->
-  <ion-tab tab="appointments">
-    <ion-nav id="appointments-nav"></ion-nav>
-    <div id="appointments-page">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Citas Médicas</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
+  <!-- Tab Citas Médicas -->
+<ion-tab tab="appointments">
+  <div class="ion-page" id="appointments-content">
+    <ion-toolbar>
+      <!-- Título centrado -->
+      <ion-title class="title-container">Citas Médicas</ion-title>
+
+      <!-- Botones de notificaciones y menú -->
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-button>
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-content>
+      <!-- Si hay citas médicas, se mostrarán las tarjetas -->
+  
+
+      <!-- Mensaje cuando no hay citas médicas -->
+     
         <div class="example-content">
-          Aquí puedes gestionar tus citas médicas.
+          <h2>¡Empecemos!</h2>
+          <p>No tienes citas médicas programadas aún.</p>
         </div>
-      </ion-content>
-    </div>
-  </ion-tab>
+   
+    </ion-content>
+
+    <!-- Botón Agregar Cita Médica siempre visible -->
+    <ion-footer>
+      <ion-button class="oval-button" expand="full" fill="clear" (click)="goToAppointmentForm()">
+        Agregar Cita Médica
+      </ion-button>
+    </ion-footer>
+  </div>
+</ion-tab>
+
 
   <!-- Tab Buscar -->
   <ion-tab tab="search">
