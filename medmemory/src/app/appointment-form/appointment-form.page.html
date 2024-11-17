@@ -1,13 +1,71 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>appointment-form</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar>
+  <!-- Botón de Cancelar a la izquierda -->
+  <ion-buttons slot="start">
+    <ion-button (click)="cancel()">
+      <ion-icon class="arrow-back-outline" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">appointment-form</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Título centrado -->
+  <ion-title class="title-container">Agregar Cita Médica</ion-title>
+</ion-toolbar>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+    <!-- Nombre del Paciente -->
+    <ion-item>
+      <ion-label position="stacked">Profesional de la Salud</ion-label>
+      <ion-input formControlName="nombre" required></ion-input>
+    </ion-item>
+
+    <!-- Nota (Textarea) -->
+    <ion-item>
+      <ion-label position="stacked">Nota</ion-label>
+      <ion-textarea formControlName="nota" rows="1" auto-grow="true"></ion-textarea>
+    </ion-item>
+
+    <!-- Fecha -->
+    <ion-item class="no-border">
+      <ion-label position="stacked">Fecha</ion-label>
+    </ion-item>
+
+    <div class="custom-datetime-wrapper">
+      <ion-datetime 
+        formControlName="fecha" 
+        presentation="date" 
+        required 
+        class="custom-datetime"
+        [min]="todayDate">
+      </ion-datetime>
+    </div>
+
+    <!-- Hora -->
+    <ion-item>
+      <ion-label class="label-hora">Hora</ion-label>
+      <ion-input
+        class="input-hora" 
+        formControlName="hora"
+        type="number"
+        placeholder="HH"
+        min="0"
+        max="23"
+        required
+        (ionInput)="limitInputLength($event)">
+      </ion-input>
+      <span>:</span>
+      <ion-input
+        class="input-hora" 
+        formControlName="minuto"
+        type="number"
+        placeholder="MM"
+        min="0"
+        max="59"
+        required
+        (ionInput)="limitInputLength($event)">
+      </ion-input>
+    </ion-item>
+
+    <!-- Botón de Guardar -->
+    <ion-button class="oval-button1" fill="clear" expand="full" type="submit">Guardar Cita</ion-button>
+  </form>
 </ion-content>
