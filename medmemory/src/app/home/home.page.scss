@@ -42,6 +42,10 @@ ion-content{
     padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
   }
 
+  .citas-container{
+    padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
+  }
+
   .selected-card {
     background-color:#c9c7c2; /* Cambia el color de fondo cuando está seleccionado */
     transition: background-color 0.3s ease; /* Agrega una transición suave */
@@ -68,6 +72,11 @@ ion-content{
       color: black;
     }
   }
+
+  .citas-container ion-card {
+    border-radius: 1px; /* Cambia a un valor bajo para que sean más cuadradas */
+  }
+  
 }
 
 ion-menu{

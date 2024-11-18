@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service'; // Asegúrate de tener e
 import { NavController, AlertController } from '@ionic/angular';
 import { IonTabs } from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';
+import { AppointmentsService } from '../services/appointments.service';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { MedicinesService } from '../services/medicines.service';
 export class HomePage {
   userName: string = '';
   medicamentos: any[] = [];  // Inicializa un array para los medicamentos
+  citasMedicas: any[] = [];  // Inicializa un array para las citas médicas
   selectedCardId: string | null = null; 
 
   // Obtén una referencia a IonTabs
@@ -21,7 +23,8 @@ export class HomePage {
     private authService: AuthService, 
     private navCtrl: NavController, 
     private alertCtrl: AlertController,
-    private medicinesService: MedicinesService
+    private medicinesService: MedicinesService,
+    private appointmentsService: AppointmentsService
   ) {}
 
    // Método que carga los medicamentos/recordatorios
@@ -37,9 +40,23 @@ export class HomePage {
     });
   }
 
+  // Método que carga las citas médicas
+  cargarCitasMedicas() {
+    this.appointmentsService.getAppointments().subscribe(data => {
+      this.citasMedicas = data.map(e => {
+        const dataObj = e.payload.doc.data() as any; // Aseguramos que lo tratamos como objeto
+        return {
+          id: e.payload.doc.id,
+          ...dataObj // Hacemos el spread de los datos como objeto
+        };
+      });
+    });
+  }
+
   // ionViewWillEnter se llama cada vez que la vista está a punto de entrar
   ionViewWillEnter() {
     this.cargarRecordatorios();  // Cargar recordatorios cada vez que la vista se muestre
+    this.cargarCitasMedicas();  // Cargar citas médicas cada vez que la vista se muestre
   }
   
   async onLogout() {

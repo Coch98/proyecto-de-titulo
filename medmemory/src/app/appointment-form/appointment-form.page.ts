@@ -57,11 +57,14 @@ export class AppointmentFormPage implements OnInit {
       // Asegurar que tanto la hora como los minutos tengan dos dígitos
       hora = hora.padStart(2, '0');  // Agrega un 0 al inicio si la hora tiene un solo dígito
       minuto = minuto.padStart(2, '0');  // Agrega un 0 al inicio si los minutos tienen un solo dígito
+
+      const fechaOriginal = new Date(this.appointmentForm.value.fecha);
+      const fechaFormateada = fechaOriginal.toLocaleDateString('es-ES');
   
       const appointmentData: CitaMedica = {
         nombre: this.appointmentForm.value.nombre,
         nota: this.appointmentForm.value.nota,
-        fecha: this.appointmentForm.value.fecha,
+        fecha: fechaFormateada, 
         hora: `${hora}:${minuto}`  // Guardar en formato HH:mm
       };
   
@@ -77,8 +80,6 @@ export class AppointmentFormPage implements OnInit {
     }
   }
   
-  
-
   async mostrarAlertaExito() {
     const alert = await this.alertController.create({
       header: 'Éxito',

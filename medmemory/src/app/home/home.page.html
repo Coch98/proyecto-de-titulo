@@ -107,7 +107,7 @@
     </div>
   </ion-tab>
   
-  <!-- Tab Citas Médicas -->
+ <!-- Tab Citas Médicas -->
 <ion-tab tab="appointments">
   <div class="ion-page" id="appointments-content">
     <ion-toolbar>
@@ -124,16 +124,28 @@
     </ion-toolbar>
 
     <ion-content>
-      <!-- Si hay citas médicas, se mostrarán las tarjetas -->
-  
+      <!-- Si hay citas médicas, se muestran las tarjetas -->
+      <div class="citas-container" *ngIf="citasMedicas.length > 0; else noCitas">
+        <ion-card *ngFor="let cita of citasMedicas" [ngClass]="{'selected-card': selectedCardId === cita.id}">
+          <ion-card-header>
+            <ion-card-title>{{ cita.nombre }}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+            <p><strong>Hora:</strong> {{ cita.hora }}</p>
+            <p><strong>Nota:</strong> {{ cita.nota }}</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
 
       <!-- Mensaje cuando no hay citas médicas -->
-     
+      <ng-template #noCitas>
         <div class="example-content">
           <h2>¡Empecemos!</h2>
           <p>No tienes citas médicas programadas aún.</p>
         </div>
-   
+      </ng-template>
     </ion-content>
 
     <!-- Botón Agregar Cita Médica siempre visible -->
