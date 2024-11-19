@@ -31,6 +31,7 @@
       </ion-toolbar>
   
       <ion-content>
+        
         <div *ngIf="medicamentos.length > 0; else noRecordatorios">
           <!-- Mostrar las tarjetas de medicamentos si hay datos -->
           <ion-card *ngFor="let medicamento of medicamentos">

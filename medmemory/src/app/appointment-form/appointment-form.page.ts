@@ -70,12 +70,12 @@ export class AppointmentFormPage implements OnInit {
   
       // Guardar en Firestore usando el servicio
       this.appointmentsService.addAppointment(appointmentData).then(() => {
-        this.mostrarAlertaExito();
         console.log('Cita médica guardada exitosamente');
       }).catch(error => {
         console.error('Error al guardar la cita médica:', error);
       });
-  
+
+      this.mostrarAlertaExito();
       this.appointmentForm.reset();
     }
   }
@@ -89,7 +89,7 @@ export class AppointmentFormPage implements OnInit {
           text: 'OK',
           cssClass: 'custom-alert-button',
           handler: () => {
-            this.navCtrl.pop(); // Navega de regreso
+            this.navCtrl.navigateBack('/home');
           }
         }
       ],
