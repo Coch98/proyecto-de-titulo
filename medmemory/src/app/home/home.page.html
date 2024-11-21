@@ -32,19 +32,48 @@
   
       <ion-content>
         
-        <div *ngIf="medicamentos.length > 0; else noRecordatorios">
-          <!-- Mostrar las tarjetas de medicamentos si hay datos -->
-          <ion-card *ngFor="let medicamento of medicamentos">
-            <ion-card-header>
-              <ion-card-title>{{ medicamento.nombre }}</ion-card-title>
-            </ion-card-header>
+        <div *ngIf="medicamentos.length > 0 || citasMedicas.length > 0; else noRecordatorios">
+          <ion-list>
+            <!-- Medicamentos -->
+            <ion-item-group *ngIf="medicamentos.length > 0">
+              <ion-item-divider>
+                <ion-label>
+                  <h2>Medicamentos</h2>
+                </ion-label>
+              </ion-item-divider>
+              <ion-item *ngFor="let medicamento of medicamentos" lines="none">
+                <ion-thumbnail slot="start">
+                  <img src="assets/icon/medicine.png" alt="Medicina">
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>{{ medicamento.nombre }}</h2>
+                  <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
+                  <p><strong>Dosis:</strong> {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
+                  <p><strong>Horas:</strong> {{ medicamento.horas.join(' - ') }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-item-group>
         
-            <ion-card-content>
-              <p><strong>Frecuencia:</strong> {{ medicamento.frecuencia }} vez(es) al día</p>
-              <p><strong>Dosis:</strong> {{ medicamento.dosis }} {{ medicamento.tipoDosis }}</p>
-              <p><strong>Horas:</strong> {{ medicamento.horas.join(' - ') }}</p>
-            </ion-card-content>
-          </ion-card>
+            <!-- Citas Médicas -->
+            <ion-item-group *ngIf="citasMedicas.length > 0">
+              <ion-item-divider >
+                <ion-label>
+                  <h2>Citas Médicas</h2>
+                </ion-label>
+              </ion-item-divider>
+              <ion-item *ngFor="let cita of citasMedicas" lines="none">
+                <ion-thumbnail slot="start">
+                  <img src="assets/icon/appointment.png" alt="Cita médica">
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>{{ cita.nombre }}</h2>
+                  <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+                  <p><strong>Hora:</strong> {{ cita.hora }}</p>
+                  <p><strong>Nota:</strong> {{ cita.nota }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
         </div>
       
         <!-- Mensaje por defecto cuando no hay recordatorios -->
