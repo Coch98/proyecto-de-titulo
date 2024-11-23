@@ -156,7 +156,7 @@
     <ion-content>
       <!-- Si hay citas médicas, se muestran las tarjetas -->
       <div class="citas-container" *ngIf="citasMedicas.length > 0; else noCitas">
-        <ion-card *ngFor="let cita of citasMedicas" [ngClass]="{'selected-card': selectedCardId === cita.id}">
+        <ion-card *ngFor="let cita of citasMedicas"  (click)="editarCita(cita.id)"  [ngClass]="{'selected-card': selectedCardId === cita.id}">
           <ion-card-header>
             <ion-card-title>{{ cita.nombre }}</ion-card-title>
           </ion-card-header>

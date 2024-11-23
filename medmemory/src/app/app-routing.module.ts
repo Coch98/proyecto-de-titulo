@@ -26,9 +26,14 @@ const routes: Routes = [
   {
     path: 'edit-medicine/:id',
     loadChildren: () => import('./edit-medicine/edit-medicine.module').then( m => m.EditMedicinePageModule)
-  },  {
+  },
+  {
     path: 'appointment-form',
     loadChildren: () => import('./appointment-form/appointment-form.module').then( m => m.AppointmentFormPageModule)
+  },
+  {
+    path: 'edit-appointment/:id',
+    loadChildren: () => import('./edit-appointment/edit-appointment.module').then( m => m.EditAppointmentPageModule)
   },
 
 

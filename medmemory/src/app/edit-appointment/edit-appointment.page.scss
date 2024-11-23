@@ -24,6 +24,28 @@ ion-toolbar {
     flex-direction: column; /* Asegura que el contenido se apile verticalmente */
     height: 100%; /* Asegura que ocupe toda la altura disponible */
     --background: #f1efe8;
+
+    ion-card {
+      background: #ffffff;
+      border-radius: 100px;
+      box-shadow: 0px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+
+      ion-card-header{
+        padding: 16px 0px 5px 0px;
+        
+      }
+    
+      ion-card-title {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    
+      ion-card-content {
+        font-size: 18px;
+        color: black;
+      }
+    }
   }
   
   form {
@@ -44,14 +66,7 @@ ion-toolbar {
         font-family: 'Roboto', sans-serif;
         font-weight: bold;
       }
-
-      ion-textarea {
-        --padding-top: 14px; /* Elimina el espacio superior */
-        --padding-bottom: 0px; /* Elimina el espacio inferior */
-      }
-
-      /* Aplica el color de fondo a todo el componente ion-datetime */
-
+    
       ion-input {
         font-size: 16px;          /* Tamaño del texto de entrada */
         color: black;              /* Color del texto */
@@ -72,7 +87,6 @@ ion-toolbar {
         font-size: 16px; // Tamaño del separador
       }
     }
-
     
     .no-border {
       --border-width: 0; /* Elimina el borde */
@@ -84,6 +98,14 @@ ion-toolbar {
       padding: 0px;          /* Espaciado interno del botón */
       color: white;               /* Color del texto */
       background-color: #26b609;  /* Fondo verde */
+      border-radius: 35px;        /* Bordes redondeados para un efecto ovalado */
+      font-size: 16px;
+    }
+
+    .oval-button2 {
+      padding: 0px;          /* Espaciado interno del botón */
+      color: white;               /* Color del texto */
+      background-color: #df1b1b;  /* Fondo rojo */
       border-radius: 35px;        /* Bordes redondeados para un efecto ovalado */
       font-size: 16px;
     }
@@ -103,12 +125,11 @@ ion-toolbar {
       --background: #f1efe8;
       --background-rgb: #f1efe8;  
     }
-      
+
     .custom-datetime::part(calendar-day):focus {
       background-color: #26b609;
       box-shadow: 0px 0px 0px 4px rgba(125, 160, 90, 0.2);
     }
-      
   }
   
   

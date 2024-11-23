@@ -77,8 +77,8 @@ export class EditMedicinePage implements OnInit {
     
     if (this.medicamentoForm.valid) {
       const horasActualizadas = this.horas.map((_, index) => {
-        const hora = this.medicamentoForm.get(`hora${index}Hora`)?.value;
-        const minuto = this.medicamentoForm.get(`hora${index}Minuto`)?.value;
+        const hora = String(this.medicamentoForm.get(`hora${index}Hora`)?.value).padStart(2, '0');
+      const minuto = String(this.medicamentoForm.get(`hora${index}Minuto`)?.value).padStart(2, '0');
         return `${hora}:${minuto}`;
       });
       

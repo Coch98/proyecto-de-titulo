@@ -76,7 +76,7 @@ export class AppointmentFormPage implements OnInit {
       });
 
       this.mostrarAlertaExito();
-      this.appointmentForm.reset();
+      //this.appointmentForm.reset();
     }
   }
   

@@ -110,4 +110,13 @@ export class HomePage implements OnInit {
       this.selectedCardId = null;
     }, 150);
   }
+
+  editarCita(id: string) {
+    this.selectedCardId = id;
+    setTimeout(() => {
+      this.navCtrl.navigateForward(`/edit-appointment/${id}`);
+      this.selectedCardId = null;
+    }, 150);
+  }
+  
 }
