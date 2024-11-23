@@ -42,6 +42,10 @@ ion-content{
     padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
   }
 
+  .citas-container{
+    padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
+  }
+
   .selected-card {
     background-color:#c9c7c2; /* Cambia el color de fondo cuando está seleccionado */
     transition: background-color 0.3s ease; /* Agrega una transición suave */
@@ -68,6 +72,64 @@ ion-content{
       color: black;
     }
   }
+
+  ion-list {
+    background: #f1efe8; // Fondo suave para el contenedor
+    padding: 5px;
+  
+    ion-item {
+      margin: 1px;
+      background: #ffffff; // Fondo blanco para cada item
+      border-radius: 5px; // Bordes redondeados para los ítems
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); // Sombra ligera
+  
+      ion-thumbnail {
+        width: 40px; // Ajusta el tamaño total del thumbnail
+        height: 40px;
+  
+        img {
+          width: 100%; // Asegura que la imagen ocupe el contenedor
+          height: 100%; // Ajusta la altura al contenedor
+          object-fit: cover; // Asegura que la imagen se recorte correctamente
+          
+        }
+      }
+  
+      ion-label {
+        h2 {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #333;
+          margin-bottom: 0.3rem;
+          text-align: start;
+        }
+  
+        p {
+          font-size: 0.9rem;
+          color: #333;
+          margin: 0.2rem 0;
+          text-align: start;
+        }
+      }
+    }
+  
+    ion-item-divider {
+      background:#26b609; // Fondo más claro para los divisores
+      border-radius: 5px; // Bordes redondeados para consistencia
+      margin: 5px 0; // Espaciado superior e inferior
+      border: none; // Elimina cualquier borde residual
+      box-shadow: none; // Elimina cualquier sombra que pueda dar la impresión de una línea
+
+      h2 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 0.3rem;
+        text-align: start;
+      }
+    }
+  }
+  
 }
 
 ion-menu{
@@ -128,6 +190,5 @@ ion-tab-bar {
   
   ion-label {
     font-size: 14px;
-  }
-  
+  } 
 }

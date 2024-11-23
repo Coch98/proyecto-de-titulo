@@ -81,7 +81,6 @@ export class MedicineFormPage implements OnInit {
   
       // Guardar en Firestore usando el servicio
       this.medicinesService.addMedicine(medicamentoData).then(() => {
-        this.mostrarAlertaExito();
         console.log('Medicamento guardado exitosamente');
       }).catch(error => {
         console.error('Error al guardar el medicamento:', error);
@@ -89,6 +88,7 @@ export class MedicineFormPage implements OnInit {
   
       this.medicamentos.push(medicamentoData);
       console.log('Medicamento guardado:', medicamentoData);
+      this.mostrarAlertaExito();
   
       this.medicamentoForm.reset();
       this.count = 1;
@@ -102,19 +102,19 @@ export class MedicineFormPage implements OnInit {
       message: 'Medicamento agregado exitosamente.',
       buttons: [
         {
-          text:'OK',
+          text: 'OK',
           cssClass: 'custom-alert-button',
-          handler: () =>{
-            this.navCtrl.pop()
-          },
-      }],
+          handler: () => {
+            this.navCtrl.navigateBack('/home'); // Navega de regreso
+          }
+        }
+      ],
       backdropDismiss: false,
-      cssClass: 'custom-alert'  
+      cssClass: 'custom-alert'
     });
   
     await alert.present();
   }
-  
   
   decrement() {
     if (this.count > 1) {

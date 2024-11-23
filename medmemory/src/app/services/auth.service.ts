@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +19,12 @@ export class AuthService {
     return this.afAuth.createUserWithEmailAndPassword(user.email, user.password)
       .then(userCredential => {
         // Guardar datos adicionales del usuario en Firestore
-        this.firestore.collection('RDU').doc(userCredential.user?.uid).set({
+        return this.firestore.collection('users').doc(userCredential.user?.uid).set({
           uid: userCredential.user?.uid, // Guardar el UID del usuario
           name: user.name,
           email: user.email,
-          password: user.password,
-          emailVerified: false // Puedes usar esto para verificar el correo
+          password: user.password
         });
-        
-        // Enviar el correo de verificación
-        this.sendEmailVerification();
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -35,13 +32,15 @@ export class AuthService {
         } else {
           throw new Error('Error al registrar el usuario');
         }
-      });
-  }
+     });
+    }
+
   async sendEmailVerification() {
     const user = await this.afAuth.currentUser;
     return user?.sendEmailVerification();
   }
 
+  // Método para iniciar sesión
   loginUser(user: any) {
     return this.afAuth.signInWithEmailAndPassword(user.email, user.password)
     .then((userCredential) => {
@@ -56,8 +55,13 @@ export class AuthService {
     });
   }
 
+  // Método para cerrar sesión
   logoutUser() {
     return this.afAuth.signOut();
   }
-  
+
+  // Método para obtener el usuario actual
+  getCurrentUser() {
+    return this.afAuth.authState;
+  }
 }
