@@ -74,11 +74,13 @@ export class EditAppointmentPage implements OnInit {
         hora: `${hora}:${minuto}`, // Hora en formato HH:mm
       };
 
-      this.appointmentsService.updateAppointment(this.id, updatedAppointment)
-        .then(() => {console.log('Cita médica actualizada exitosamente');} )
-        .catch(err => console.error('Error actualizando la cita médica:', err));
-
-      this.mostrarAlertaExito();
+      this.appointmentsService.updateAppointment(this.id, updatedAppointment).then(() => {
+        console.log('Cita médica actualizada exitosamente');
+        this.mostrarAlertaExito();
+      }).catch(error => {
+        console.error('Error al actualizar la cita médica:', error);
+      });
+      
     }
   }
 

@@ -83,14 +83,14 @@ export class EditMedicinePage implements OnInit {
       });
       
       this.medicamentoForm.patchValue({ dosis: this.count,  horas: horasActualizadas });
-      this.medicinesService.updateMedicine(this.id, this.medicamentoForm.value)
-        .then(() => {
+      this.medicinesService.updateMedicine(this.id, this.medicamentoForm.value).then(() => {
+          this.mostrarAlertaExito();  
         })
         .catch(err => {
           console.error('Error actualizando el medicamento:', err);
         });
 
-        this.mostrarAlertaExito();  
+        
     }
   }
 

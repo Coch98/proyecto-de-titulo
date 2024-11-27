@@ -71,11 +71,11 @@ export class AppointmentFormPage implements OnInit {
       // Guardar en Firestore usando el servicio
       this.appointmentsService.addAppointment(appointmentData).then(() => {
         console.log('Cita médica guardada exitosamente');
+        this.mostrarAlertaExito();
       }).catch(error => {
         console.error('Error al guardar la cita médica:', error);
       });
 
-      this.mostrarAlertaExito();
       //this.appointmentForm.reset();
     }
   }
