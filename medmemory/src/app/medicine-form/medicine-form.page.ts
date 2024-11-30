@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, AlertController } from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { Capacitor} from '@capacitor/core';
 
 interface Medicamento {
   nombre: string;
@@ -39,11 +40,13 @@ export class MedicineFormPage implements OnInit {
   }
 
   async initializeNotifications() {
-    const permission = await LocalNotifications.requestPermissions();
-    if (permission.display === 'granted') {
-      console.log('Permisos concedidos para notificaciones.');
-    } else {
-      console.error('Permisos denegados.');
+    if (Capacitor.getPlatform() === 'android') {
+      const permission = await LocalNotifications.requestPermissions();
+      if (permission.display !== 'granted') {
+        console.error('Permisos denegados para notificaciones.');
+      } else {
+        console.log('Permisos concedidos para notificaciones.');
+      }
     }
   }
 
@@ -105,19 +108,31 @@ export class MedicineFormPage implements OnInit {
     const notifications = medicamento.horas.map((hora, index) => {
       const [hour, minute] = hora.split(':').map(Number);
       const notificationTime = new Date();
-      notificationTime.setHours(hour, minute, 0);
+      notificationTime.setHours(hour, minute, 0, 0); // Establece la hora y minutos
+  
+      // Si la hora programada ya pasó, mueve la notificación al día siguiente
+      if (notificationTime < new Date()) {
+        notificationTime.setDate(notificationTime.getDate() + 1); // Mueve al día siguiente
+      }
   
       return {
         title: "Recordatorio de Medicamento",
         body: `Es hora de tomar tu medicamento: ${medicamento.nombre}`,
         id: new Date().getTime() + index, // Genera un ID único basado en el tiempo actual
-        schedule: { at: notificationTime },
+        schedule: { at: notificationTime }, // Programa la notificación
         actionTypeId: "",
         extra: null
       };
     });
   
-    LocalNotifications.schedule({ notifications });
+    // Programa todas las notificaciones
+    LocalNotifications.schedule({ notifications })
+      .then(() => {
+        console.log("Notificaciones programadas correctamente:", notifications);
+      })
+      .catch(error => {
+        console.error("Error al programar las notificaciones:", error);
+      });
   }
 
   async mostrarAlertaExito() {
