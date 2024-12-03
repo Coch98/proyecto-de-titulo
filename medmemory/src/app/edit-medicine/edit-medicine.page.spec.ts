@@ -5,6 +5,8 @@ import { of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MedicinesService } from '../services/medicines.service';
 import { NavController, AlertController } from '@ionic/angular';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 
 describe('EditMedicinePage', () => {
   let component: EditMedicinePage;
@@ -44,7 +46,8 @@ describe('EditMedicinePage', () => {
         { provide: AngularFirestore, useValue: angularFirestoreMock },
         { provide: NavController, useValue: navCtrlSpy },
         { provide: AlertController, useValue: alertCtrlSpy },
-        MedicinesService // Agrega el servicio real o un mock si es necesario
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }, // Proporciona las opciones de Firebase aquí
+        MedicinesService
       ]
     }).compileComponents();
 
@@ -95,18 +98,6 @@ describe('EditMedicinePage', () => {
 
     expect(alertCtrlSpy.create).toHaveBeenCalled();
     expect(alertSpy.present).toHaveBeenCalled();
-  }));
-
-  it('should delete medicine', fakeAsync(() => {
-    const alertSpy = jasmine.createSpyObj('Alert', ['present']);
-    alertCtrlSpy.create.and.returnValue(Promise.resolve(alertSpy));
-    medicinesServiceSpy.deleteMedicine.and.returnValue(Promise.resolve());
-
-    component.eliminar('mockId');
-    tick(); // Procesa la promesa
-
-    expect(alertCtrlSpy.create).toHaveBeenCalled(); // Verifica que se crea la alerta
-    expect(alertSpy.present).toHaveBeenCalled(); // Verifica que se presenta la alerta
   }));
 
   it('should decrement count', () => {

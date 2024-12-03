@@ -1,40 +1,53 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HomePage } from './home.page';
-import { AuthService } from '../services/auth.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MedicinesService } from '../services/medicines.service';
+import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { NavController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AppointmentsService } from '../services/appointments.service';
+import { NavController, AlertController } from '@ionic/angular';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let firestoreSpy: jasmine.SpyObj<AngularFirestore>;
-  let medicinesServiceSpy: jasmine.SpyObj<MedicinesService>;
+  let appointmentsServiceSpy: jasmine.SpyObj<AppointmentsService>;
   let navCtrlSpy: jasmine.SpyObj<NavController>;
   let alertCtrlSpy: jasmine.SpyObj<AlertController>;
 
-  beforeEach(async () => {
-    // Crear Spies para los servicios
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['logoutUser']);
-    firestoreSpy = jasmine.createSpyObj('AngularFirestore', ['collection']);
-    medicinesServiceSpy = jasmine.createSpyObj('MedicinesService', ['getMedicines', 'deleteMedicine']);
-    navCtrlSpy = jasmine.createSpyObj('NavController', ['navigateBack', 'navigateForward']);
+  beforeEach(() => {
+    const activatedRouteMock = {
+      snapshot: {
+        paramMap: {
+          get: () => 'mockId' // ID simulado
+        }
+      }
+    };
+
+    const angularFirestoreMock = {
+      collection: () => ({
+        doc: () => ({
+          valueChanges: () => of({ /* Datos simulados de la cita */ }),
+          snapshotChanges: () => of([{ /* datos simulados */ }]),
+          delete: () => Promise.resolve(),
+        }),
+        snapshotChanges: () => of([{ /* datos simulados */ }])
+      })
+    };
+
+    appointmentsServiceSpy = jasmine.createSpyObj('AppointmentsService', ['getAppointments', 'updateAppointment', 'deleteAppointment']);
+    navCtrlSpy = jasmine.createSpyObj('NavController', ['navigateBack', 'pop', 'navigateForward']);
     alertCtrlSpy = jasmine.createSpyObj('AlertController', ['create']);
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [HomePage],
-      imports: [IonicModule.forRoot()],
       providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: AngularFirestore, useValue: firestoreSpy },
-        { provide: MedicinesService, useValue: medicinesServiceSpy },
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
+        { provide: AngularFirestore, useValue: angularFirestoreMock },
         { provide: NavController, useValue: navCtrlSpy },
-        { provide: AlertController, useValue: alertCtrlSpy }
+        { provide: AlertController, useValue: alertCtrlSpy },
+        { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }, // Proporciona las opciones de Firebase aquí
+        AppointmentsService
       ]
     }).compileComponents();
 
@@ -47,35 +60,39 @@ describe('HomePage', () => {
     expect(component).toBeTruthy();
   });
 
-
-  it('should navigate back to login on logout', async () => {
-    authServiceSpy.logoutUser.and.returnValue(Promise.resolve());
-
-    const alertSpy = jasmine.createSpyObj('Alert', ['present']);
-    alertCtrlSpy.create.and.returnValue(Promise.resolve(alertSpy));
-
-    await component.onLogout();
-
-    expect(alertCtrlSpy.create).toHaveBeenCalled();
-    
-    alertSpy.present.and.callFake(() => {
-      expect(authServiceSpy.logoutUser).toHaveBeenCalled();
-      expect(navCtrlSpy.navigateBack).toHaveBeenCalledWith('/login');
-    });
-  });
+  
 
   it('should navigate to medicine form', () => {
     component.goToMedicineForm();
     expect(navCtrlSpy.navigateForward).toHaveBeenCalledWith('/medicine-form');
   });
 
-  it('should edit medicine and navigate to edit page', fakeAsync(() => {
-    const mockMedicineId = '1';
-    component.editar(mockMedicineId);
-    
-    // Simula el paso del tiempo
-    tick(150); // Espera 150ms para que se ejecute el setTimeout
-    
-    expect(navCtrlSpy.navigateForward).toHaveBeenCalledWith(`/edit-medicine/${mockMedicineId}`);
+  it('should navigate to appointment form', () => {
+    component.goToAppointmentForm();
+    expect(navCtrlSpy.navigateForward).toHaveBeenCalledWith('/appointment-form');
+  });
+
+  it('should navigate to edit medicine', fakeAsync(() => {
+    component.editar('1');
+    tick(150);
+    expect(navCtrlSpy.navigateForward).toHaveBeenCalledWith('/edit-medicine/1');
   }));
+
+  it('should navigate to edit appointment', fakeAsync(() => {
+    component.editarCita('1');
+    tick(150);
+    expect(navCtrlSpy.navigateForward).toHaveBeenCalledWith('/edit-appointment/1');
+  }));
+
+  it('should show logout confirmation alert', fakeAsync(() => {
+    const alertSpy = jasmine.createSpyObj('Alert', ['present']);
+    alertCtrlSpy.create.and.returnValue(Promise.resolve(alertSpy));
+
+    component.onLogout();
+    tick();
+
+    expect(alertCtrlSpy.create).toHaveBeenCalled();
+    expect(alertSpy.present).toHaveBeenCalled();
+  }));
+
 });
