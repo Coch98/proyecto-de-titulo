@@ -31,7 +31,7 @@ git clone https://github.com/Coch98/proyecto-de-titulo.git
 - cd proyecto-de-titulo
 - cd medmory
 
-### **3. Acceder al directorio del proyecto**
+### **3. Instalar las dependencias**
 npm install
 
 ### **4. Ejecutar el Proyecto**
