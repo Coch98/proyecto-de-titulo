@@ -77,19 +77,20 @@ export class EditMedicinePage implements OnInit {
     
     if (this.medicamentoForm.valid) {
       const horasActualizadas = this.horas.map((_, index) => {
-        const hora = this.medicamentoForm.get(`hora${index}Hora`)?.value;
-        const minuto = this.medicamentoForm.get(`hora${index}Minuto`)?.value;
+        const hora = String(this.medicamentoForm.get(`hora${index}Hora`)?.value).padStart(2, '0');
+      const minuto = String(this.medicamentoForm.get(`hora${index}Minuto`)?.value).padStart(2, '0');
         return `${hora}:${minuto}`;
       });
       
       this.medicamentoForm.patchValue({ dosis: this.count,  horas: horasActualizadas });
-      this.medicinesService.updateMedicine(this.id, this.medicamentoForm.value)
-        .then(() => {
-          this.mostrarAlertaExito();
+      this.medicinesService.updateMedicine(this.id, this.medicamentoForm.value).then(() => {
+          this.mostrarAlertaExito();  
         })
         .catch(err => {
           console.error('Error actualizando el medicamento:', err);
         });
+
+        
     }
   }
 
@@ -131,36 +132,44 @@ export class EditMedicinePage implements OnInit {
           handler: () => {
             // Si presiona 'Sí', se elimina el medicamento
             this.eliminar(id);
+            setTimeout(() => {
+              this.alertaEliminacion();
+            }, 250); // Retrasa la ejecución 1 segundo (1000 ms)
           }
-      }],
+        }
+      ],
       backdropDismiss: false,
-      cssClass: 'custom-alert'   
+      cssClass: 'custom-alert'
     });
-
+  
     await alert.present();
+  }
+  
+  async alertaEliminacion() {
+    const alert = await this.alertController.create({
+      header: 'Eliminado',
+      message: 'El medicamento ha sido eliminado exitosamente.',
+      buttons: [
+        {
+          text: 'OK',
+          cssClass: 'custom-alert-button',
+          handler: () => {
+            this.navCtrl.navigateBack('/home'); // Navega de regreso
+          },
+        }
+      ],
+      backdropDismiss: false,
+      cssClass: 'custom-alert'
+    });
+  
+    await alert.present();
+  
+    // Navegar después de que el usuario cierra la alerta
+    await alert.onDidDismiss();
   }
 
   eliminar(id: string) {
-    this.medicinesService.deleteMedicine(id).then(async res => {
-      const alert = await this.alertController.create({
-        header: 'Eliminado',
-        message: 'El medicamento ha sido eliminado exitosamente.',
-        buttons: [
-          {
-            text:'OK',
-            cssClass: 'custom-alert-button',
-            handler: () =>{
-              this.navCtrl.pop()
-            },
-        }],
-        backdropDismiss: false,
-        cssClass: 'custom-alert'  
-      });
-    
-      await alert.present();
-  
-      // Navegar después de que el usuario cierra la alerta
-      await alert.onDidDismiss();
+    this.medicinesService.deleteMedicine(id).then(async () => {
     }).catch(err => {
       console.error('Error eliminando el medicamento:', err);
     });

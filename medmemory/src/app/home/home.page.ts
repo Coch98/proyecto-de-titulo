@@ -1,45 +1,70 @@
-import { Component, ViewChild } from '@angular/core';
-import { AuthService } from '../services/auth.service'; // Asegúrate de tener este servicio creado
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { NavController, AlertController } from '@ionic/angular';
 import { IonTabs } from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';
+import { AppointmentsService } from '../services/appointments.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
-  userName: string = '';
-  medicamentos: any[] = [];  // Inicializa un array para los medicamentos
-  selectedCardId: string | null = null; 
+export class HomePage implements OnInit {
+  medicamentos: any[] = [];
+  citasMedicas: any[] = [];
+  selectedCardId: string | null = null;
+  userName: string | null = null;
 
-  // Obtén una referencia a IonTabs
   @ViewChild('tabs', { static: false }) tabs!: IonTabs;
 
   constructor(
     private authService: AuthService, 
     private navCtrl: NavController, 
     private alertCtrl: AlertController,
-    private medicinesService: MedicinesService
+    private medicinesService: MedicinesService,
+    private appointmentsService: AppointmentsService,
+    private firestore: AngularFirestore
   ) {}
 
-   // Método que carga los medicamentos/recordatorios
-   cargarRecordatorios() {
+  ngOnInit() {
+    this.authService.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.firestore.collection('users').doc(user.uid).valueChanges().subscribe((userData: any) => {
+          this.userName = userData?.name || 'Usuario';
+        });
+      }
+    });
+  }
+
+  cargarRecordatorios() {
     this.medicinesService.getMedicines().subscribe(data => {
       this.medicamentos = data.map(e => {
-        const dataObj = e.payload.doc.data() as any;  // Aseguramos que lo tratamos como objeto
+        const dataObj = e.payload.doc.data() as any;
         return {
           id: e.payload.doc.id,
-          ...dataObj  // Hacemos el spread de los datos como objeto
+          ...dataObj
         };
       });
     });
   }
 
-  // ionViewWillEnter se llama cada vez que la vista está a punto de entrar
+  cargarCitasMedicas() {
+    this.appointmentsService.getAppointments().subscribe(data => {
+      this.citasMedicas = data.map(e => {
+        const dataObj = e.payload.doc.data() as any;
+        return {
+          id: e.payload.doc.id,
+          ...dataObj
+        };
+      });
+    });
+  }
+
   ionViewWillEnter() {
-    this.cargarRecordatorios();  // Cargar recordatorios cada vez que la vista se muestre
+    this.cargarRecordatorios();
+    this.cargarCitasMedicas();
   }
   
   async onLogout() {
@@ -49,22 +74,22 @@ export class HomePage {
         {
           text: 'Cancelar',
           role: 'cancel',
-          cssClass: 'custom-cancel-button',  // Clase CSS para personalizar el botón
+          cssClass: 'custom-cancel-button',
         },
         {
           text: 'Cerrar Sesión',
           handler: () => {
             this.authService.logoutUser().then(() => {
               console.log('Sesión cerrada');
-              this.navCtrl.navigateBack('/login'); // Redirigir a la página de inicio de sesión
+              this.navCtrl.navigateBack('/login');
             }).catch(error => {
               console.error('Error al cerrar sesión', error);
             });
           },
-          cssClass: 'custom-logout-button'  // Clase CSS para personalizar el botón
+          cssClass: 'custom-logout-button'
         }
       ],
-      cssClass: 'custom-alert',  // Clase CSS para el alert en general
+      cssClass: 'custom-alert',
     });
 
     await alert.present();
@@ -74,13 +99,24 @@ export class HomePage {
     this.navCtrl.navigateForward('/medicine-form');
   }
 
+  goToAppointmentForm(){
+    this.navCtrl.navigateForward('/appointment-form')
+  }
+
   editar(id: string) {
-    this.selectedCardId = id; // Cambia el ID de la tarjeta seleccionada
-  
-    // Restaura el estado de selección después de un breve retraso
+    this.selectedCardId = id;
     setTimeout(() => {
       this.navCtrl.navigateForward(`/edit-medicine/${id}`);
-      this.selectedCardId = null; // Restaura el estado después de 200ms
+      this.selectedCardId = null;
     }, 150);
   }
+
+  editarCita(id: string) {
+    this.selectedCardId = id;
+    setTimeout(() => {
+      this.navCtrl.navigateForward(`/edit-appointment/${id}`);
+      this.selectedCardId = null;
+    }, 150);
+  }
+  
 }
