@@ -187,23 +187,54 @@
   </div>
 </ion-tab>
 
+<!-- Tab Buscar -->
+<ion-tab tab="search">
+  <div class="ion-page" id="search-content">
+    <ion-toolbar>
+      <!-- Título centrado -->
+      <ion-title class="title-container">Buscar Medicamentos</ion-title>
 
-  <!-- Tab Buscar -->
-  <ion-tab tab="search">
-    <ion-nav id="search-nav"></ion-nav>
-    <div id="search-page">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Buscar</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <div class="example-content">
-          Función de búsqueda.
-        </div>
-      </ion-content>
-    </div>
-  </ion-tab>
+      <!-- Botones de notificaciones y menú -->
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-button>
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-label position="floating">Nombre del Medicamento</ion-label>
+        <ion-input [(ngModel)]="nombreMedicamento"></ion-input>
+      </ion-item>
+    
+      <ion-button expand="block" (click)="buscarMedicamento()">Buscar</ion-button>
+
+      <p *ngIf="mensajeError" style="color: red; text-align: center;">{{ mensajeError }}</p>
+    
+      <ion-list *ngIf="resultado">
+        <ion-item>
+          <ion-label>
+            <h2>{{ resultado.brand_name }}</h2>
+            <p><strong>Nombre Genérico:</strong> {{ resultado.generic_name }}</p>
+            <p><strong>Ruta:</strong> {{ resultado.route }}</p>
+            <p><strong>Propósito:</strong> {{ resultado.purpose }}</p>
+            <p><strong>Indicaciones:</strong> {{ resultado.indications_and_usage }}</p>
+            <p><strong>Dosificación:</strong> {{ resultado.dosage_and_administration }}</p>
+            <p><strong>Advertencias:</strong> {{ resultado.warnings }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <p *ngIf="!resultado && !mensajeError">Introduce el nombre de un medicamento y presiona "Buscar".</p>
+    
+      <ion-text *ngIf="error" color="danger">
+        {{ error }}
+      </ion-text>
+    </ion-content>
+  </div>
+</ion-tab>
 
   <!-- Barra de Tabs en la parte inferior -->
   <ion-tab-bar slot="bottom">

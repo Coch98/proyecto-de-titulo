@@ -5,6 +5,7 @@ import { IonTabs } from '@ionic/angular';
 import { MedicinesService } from '../services/medicines.service';
 import { AppointmentsService } from '../services/appointments.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MedicamentoService } from '../services/medication-search.service';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,10 @@ export class HomePage implements OnInit {
   citasMedicas: any[] = [];
   selectedCardId: string | null = null;
   userName: string | null = null;
+  nombreMedicamento: string = '';
+  resultado: any = null;
+  error: string = '';
+  mensajeError: string = ''; 
 
   @ViewChild('tabs', { static: false }) tabs!: IonTabs;
 
@@ -25,7 +30,8 @@ export class HomePage implements OnInit {
     private alertCtrl: AlertController,
     private medicinesService: MedicinesService,
     private appointmentsService: AppointmentsService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private medicamentoService: MedicamentoService
   ) {}
 
   ngOnInit() {
@@ -60,6 +66,38 @@ export class HomePage implements OnInit {
         };
       });
     });
+  }
+
+  buscarMedicamento() {
+    if (!this.nombreMedicamento.trim()) {
+      console.error('Por favor, ingresa un nombre válido para buscar.');
+      return;
+    }
+
+    this.medicamentoService.buscarMedicamento(this.nombreMedicamento).subscribe(
+      (response: any) => {
+        if (response.results && response.results.length > 0) {
+          const medicamento = response.results[0];
+          this.resultado = {
+            brand_name: medicamento.openfda?.brand_name?.[0] || 'Nombre no disponible',
+            generic_name: medicamento.openfda?.generic_name?.[0] || 'Nombre genérico no disponible',
+            route: medicamento.openfda?.route?.[0] || 'Ruta de administración no disponible',
+            purpose: medicamento.purpose?.[0] || 'Propósito no disponible',
+            indications_and_usage: medicamento.indications_and_usage?.[0] || 'Indicaciones no disponibles',
+            dosage_and_administration: medicamento.dosage_and_administration?.[0] || 'Dosificación no disponible',
+            warnings: medicamento.warnings?.[0] || 'Advertencias no disponibles'
+          };
+        } else {
+          this.resultado = null;
+          console.error('No se encontraron resultados para este medicamento.');
+        }
+      },
+      (error) => {
+        console.error('Error al buscar el medicamento:', error);
+        this.resultado = null;
+        this.mensajeError = 'Medicamento no encontrado';
+      }
+    );
   }
 
   ionViewWillEnter() {
