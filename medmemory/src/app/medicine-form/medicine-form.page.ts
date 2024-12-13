@@ -40,14 +40,12 @@ export class MedicineFormPage implements OnInit {
   }
 
   async initializeNotifications() {
-    if (Capacitor.getPlatform() === 'android') {
       const permission = await LocalNotifications.requestPermissions();
       if (permission.display !== 'granted') {
         console.error('Permisos denegados para notificaciones.');
       } else {
         console.log('Permisos concedidos para notificaciones.');
-      }
-    }
+      }  
   }
 
   ngOnInit() {
