@@ -204,15 +204,19 @@
     </ion-toolbar>
 
     <ion-content class="ion-padding">
-      <ion-item>
-        <ion-label position="floating">Nombre del Medicamento</ion-label>
-        <ion-input [(ngModel)]="nombreMedicamento"></ion-input>
+      <!-- Campo de búsqueda -->
+      <ion-item class="no-border">
+        <ion-label position="stacked">Nombre del Medicamento</ion-label>
+        <ion-input  [(ngModel)]="nombreMedicamento"></ion-input>
       </ion-item>
-    
-      <ion-button expand="block" (click)="buscarMedicamento()">Buscar</ion-button>
 
+      <!-- Botón Buscar -->
+      <ion-button expand="full" fill="clear" class="oval-button" (click)="buscarMedicamento()">Buscar</ion-button>
+
+      <!-- Mensaje de error -->
       <p *ngIf="mensajeError" style="color: red; text-align: center;">{{ mensajeError }}</p>
-    
+
+      <!-- Resultado de búsqueda -->
       <ion-list *ngIf="resultado">
         <ion-item>
           <ion-label>
@@ -222,19 +226,16 @@
             <p><strong>Propósito:</strong> {{ resultado.purpose }}</p>
             <p><strong>Indicaciones:</strong> {{ resultado.indications_and_usage }}</p>
             <p><strong>Dosificación:</strong> {{ resultado.dosage_and_administration }}</p>
-            <p><strong>Advertencias:</strong> {{ resultado.warnings }}</p>
           </ion-label>
         </ion-item>
       </ion-list>
 
+      <!-- Mensaje por defecto -->
       <p *ngIf="!resultado && !mensajeError">Introduce el nombre de un medicamento y presiona "Buscar".</p>
-    
-      <ion-text *ngIf="error" color="danger">
-        {{ error }}
-      </ion-text>
     </ion-content>
   </div>
 </ion-tab>
+
 
   <!-- Barra de Tabs en la parte inferior -->
   <ion-tab-bar slot="bottom">

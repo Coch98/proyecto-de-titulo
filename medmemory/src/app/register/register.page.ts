@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -22,17 +23,17 @@ export class RegisterPage {
     private navCtrl: NavController,
     private alertCtrl: AlertController
   ) {}
-  
+
   cancelRegistration() {
     this.navCtrl.navigateBack('/login');
   }
 
   onEmailChange() {
-    this.errorMessage = '';
+    this.errorMessage = ''; // Limpiar mensaje de error al cambiar el email
   }
 
-  async onRegister() {
-    this.errorMessage = '';
+  async onRegister(registerForm: NgForm) {
+    this.errorMessage = ''; // Limpiar mensaje de error antes de registrar
     try {
       await this.authService.registerUser(this.user);
       console.log('User registered successfully');
@@ -42,12 +43,18 @@ export class RegisterPage {
         name: '',
         email: '',
         password: ''
-    };
+      };
+
+      // Limpiar mensaje de error después del registro
+      this.errorMessage = '';
+
+      // Restablecer el formulario
+      registerForm.reset();
 
       // Mostrar un mensaje de éxito
       const alert = await this.alertCtrl.create({
         header: '¡Bienvenido a Medmory!',
-        message: `${this.user.name} has sido registrado exitosamente.
+        message: `Has sido registrado exitosamente.
                   Por favor, revisa tu correo para verificar tu cuenta.`,
         buttons: [
           {
@@ -56,12 +63,12 @@ export class RegisterPage {
             handler: () => {
               this.navCtrl.navigateBack('/login');
             },
-        }],
+          },
+        ],
         backdropDismiss: false,
-        cssClass: 'custom-alert' 
+        cssClass: 'custom-alert',
       });
       await alert.present();
-
     } catch (error: any) {
       if (error.message === 'Este correo ya está en uso') {
         this.errorMessage = 'Este correo ya está en uso'; // Mostrar el mensaje de error en el HTML

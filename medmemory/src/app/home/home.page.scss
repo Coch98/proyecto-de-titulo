@@ -42,6 +42,11 @@ ion-content{
     padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
   }
 
+  .no-border {
+    --border-width: 0; /* Elimina el borde */
+    --border-color: transparent; /* Asegura que no haya color de borde */
+  }
+
   .citas-container{
     padding-bottom: 60px; // Asegúrate de que esto sea suficiente para no cubrir el footer
   }

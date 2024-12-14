@@ -19,7 +19,6 @@ export class HomePage implements OnInit {
   userName: string | null = null;
   nombreMedicamento: string = '';
   resultado: any = null;
-  error: string = '';
   mensajeError: string = ''; 
 
   @ViewChild('tabs', { static: false }) tabs!: IonTabs;
@@ -69,13 +68,17 @@ export class HomePage implements OnInit {
   }
 
   buscarMedicamento() {
+    // Validar que el campo no esté vacío
     if (!this.nombreMedicamento.trim()) {
-      console.error('Por favor, ingresa un nombre válido para buscar.');
+      this.mensajeError = 'Por favor, ingresa un nombre válido para buscar.';
+      this.resultado = null; // Limpiar resultados previos
       return;
     }
 
+    // Llamar al servicio para buscar el medicamento
     this.medicamentoService.buscarMedicamento(this.nombreMedicamento).subscribe(
       (response: any) => {
+        // Verificar si hay resultados
         if (response.results && response.results.length > 0) {
           const medicamento = response.results[0];
           this.resultado = {
@@ -84,25 +87,35 @@ export class HomePage implements OnInit {
             route: medicamento.openfda?.route?.[0] || 'Ruta de administración no disponible',
             purpose: medicamento.purpose?.[0] || 'Propósito no disponible',
             indications_and_usage: medicamento.indications_and_usage?.[0] || 'Indicaciones no disponibles',
-            dosage_and_administration: medicamento.dosage_and_administration?.[0] || 'Dosificación no disponible',
-            warnings: medicamento.warnings?.[0] || 'Advertencias no disponibles'
+            dosage_and_administration: medicamento.dosage_and_administration?.[0] || 'Dosificación no disponible'
           };
+          this.mensajeError = ''; // Limpiar mensaje de error
         } else {
+          // Si no hay resultados
           this.resultado = null;
-          console.error('No se encontraron resultados para este medicamento.');
+          this.mensajeError = 'Medicamento no encontrado';
         }
       },
       (error) => {
+        // Manejo de errores
         console.error('Error al buscar el medicamento:', error);
         this.resultado = null;
-        this.mensajeError = 'Medicamento no encontrado';
+        this.mensajeError = 'Hubo un error al buscar el medicamento';
       }
     );
+  }
+
+  private resetarBusqueda() {
+    // Restablece los valores iniciales
+    this.nombreMedicamento = '';
+    this.resultado = null;
+    this.mensajeError = '';
   }
 
   ionViewWillEnter() {
     this.cargarRecordatorios();
     this.cargarCitasMedicas();
+    this.resetarBusqueda();
   }
   
   async onLogout() {
